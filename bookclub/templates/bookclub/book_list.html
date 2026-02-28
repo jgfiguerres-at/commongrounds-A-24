@@ -1,0 +1,11 @@
+<h1>Book List</h1>
+
+<ul>
+    {% for book in books %}
+        <li>
+            <a href="{% url 'bookclub:book_detail' book.pk %}">
+                {{ book.title }} ({{ book.publication_year }})
+            </a>
+        </li>
+    {% endfor %}
+</ul>
