@@ -19,5 +19,5 @@ from django.urls import include, path
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('localevents/', include('localevents.urls', namespace="events"),
+    path('localevents/', include('localevents.urls', namespace="events")),
 ]
