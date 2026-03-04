@@ -1,0 +1,12 @@
+<h2> Local Events </h2>
+
+
+<ul>
+    {% for event in events %}
+        <li>
+	    <a href="{% url 'localevents:event_detail' event.pk  %}">
+                {{ event.title }}
+	    </a>
+	</li>
+    {% endfor %}
+</ul>
