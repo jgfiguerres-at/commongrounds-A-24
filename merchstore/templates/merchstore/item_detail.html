@@ -1,0 +1,9 @@
+{% block title %}Merchstore Items | {{ item.name }}{% endblock %}
+
+{% block content %}
+    <h3>{{ item.name }}</h3>
+    <p>{{ item.description }}</p>
+    <br>
+    <br>
+    <a href="{% url 'merchstore:item_list' %}">Return to item list</a>
+{% endblock %}
