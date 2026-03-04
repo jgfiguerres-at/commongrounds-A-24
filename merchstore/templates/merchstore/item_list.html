@@ -1,13 +1,15 @@
 {% extends 'merchstore/base_item.html' %}
 
-{% block title %}Merchstore Items{% endblock %}
+{% block title %}Merch Store | Item List{% endblock %}
 
 {% block content %}
     <h3>Item List</h3>
     <ul>
         {% for product in product_list %}
             <li>
-                {{ product.name }} - ₱{{ product.price }}
+                <a href="{{ product.get_absolute_url }}">
+                    {{ product.name }} - ₱{{ product.price }}
+                </a>
             </li>
         {% endfor %}
     </ul>
