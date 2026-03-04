@@ -9,8 +9,8 @@
 <h3>Description:</h3>
 <p>{{ project.description }}</p>
 <h3>Materials:</h3>
-<p>{{ project.materials }}</p>
+<ol>{{ project.materials }}</ol>
 <h3>Steps:</h3>
-<p>{{ project.steps }}</p>
+<ol>{{ project.steps }}</ol>
 <p><a href="{% url 'diyprojects:project_list' %}">Back to Projects List</a></p>
 {% endblock %}
