@@ -1,8 +1,10 @@
-{% extends 'base_item.html' %}
+{% extends 'merchstore/base_item.html' %}
 
 {% block title %}Merchstore Items{% endblock %}
 
+{% block header %}<h2>Merchstore</h2>{% endblock %}
 {% block content %}
+    <h3>Item List</h3>
     <ul>
         {% for item in items.all %}
             <li>
@@ -10,7 +12,4 @@
             </li>
         {% endfor %}
     </ul>
-    <br>
-    <br>
-    <a href="{% url 'merchstore:item_list' %}">Return to item list</a>
 {% endblock %}
