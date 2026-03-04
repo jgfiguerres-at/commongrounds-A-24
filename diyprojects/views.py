@@ -1,10 +1,15 @@
-from django.shortcuts import render
-from .models import Project
+from django.views.generic import ListView
+from django.views.generic.detail import DetailView
 
-def project_list(request):
-    projects = Project.objects.all()
-    return render(request, 'diyprojects/project_list.html', {'projects': projects})
+from .models import ProjectCategory, Project
 
-def project_detail(request, pk):
-    project = Project.objects.get(pk=pk)
-    return render(request, 'diyprojects/project_detail.html', {'project': project})
+
+class ProjectListView(ListView):
+    context_object_name = 'projects'
+    model = Project
+    template_name = 'diyprojects/project_list.html' # default value
+
+
+class ProjectDetailView(DetailView):
+    model = Project
+    template_name = 'diyprojects/project_detail.html' # default value
