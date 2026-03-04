@@ -6,7 +6,7 @@ from .models import ProductType, Product
 
 
 def item_list(request):
-    items = Products.objects.all()
+    items = Product.objects.all()
 
     return render(request, 'merchstore/item_list.html', {
         'items': items,
@@ -14,7 +14,7 @@ def item_list(request):
 
 
 def item_detail(request, id):
-    item = Products.objects.get(pk=id)
+    item = Product.objects.get(pk=id)
 
     return render(request, 'merchstore/item_detail.html', {
         'item': item,

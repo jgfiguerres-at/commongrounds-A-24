@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 
 class ProductType(models.Model):
@@ -19,7 +20,7 @@ class Product(models.Model):
     product_type = models.ForeignKey(
         ProductType,
         on_delete = models.SET_NULL,
-        related_name = 'product_type',
+        related_name='type',
         null=True,
     )
     description = models.TextField()
@@ -27,6 +28,10 @@ class Product(models.Model):
     
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse('merchstore:item_detail', args=[int(self.pk)])
+
 
     class Meta:
         ordering = ['name']
