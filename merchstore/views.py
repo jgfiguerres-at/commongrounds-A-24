@@ -17,8 +17,7 @@ def item_detail(request, id):
     item = Products.objects.get(pk=id)
 
     return render(request, 'merchstore/item_detail.html', {
-        'recipe' : recipe,
-        'ingredients': ingredients,
+        'items': items,
     })
 
 
