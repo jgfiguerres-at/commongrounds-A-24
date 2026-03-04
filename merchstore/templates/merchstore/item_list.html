@@ -6,7 +6,7 @@
 {% block content %}
     <h3>Item List</h3>
     <ul>
-        {% for item in items.all %}
+        {% for item in items %}
             <li>
                 {{ item.name }} - {{ item.price }}
             </li>
