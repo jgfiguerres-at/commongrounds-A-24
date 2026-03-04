@@ -1,3 +1,41 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import ProductType, Product
+
+
+class ProductTypeAdmin(admin.ModelAdmin):
+    model = ProductType
+    list_display = ('name',)
+    list_filter = ()
+    search_fields = ('name',)
+
+    fieldsets = [
+        ('Details', {
+            'fields': [
+                'name',
+                'description',
+            ]
+        })
+    ]
+
+
+class ProductAdmin(admin.ModelAdmin):
+    model = Product
+    list_display = ('name', 'type', 'price',)
+    list_filter = ()
+    search_fields = ('name',)
+
+    fieldsets = [
+        ('Details', {
+            'fields': [
+                'name',
+                'type',
+                'price',
+                'description',
+            ]
+        })
+    ]
+
+
+admin.site.register(ProductType, ProductTypeAdmin)
+admin.site.register(Product, ProductAdmin)
