@@ -21,7 +21,7 @@ class ProductTypeAdmin(admin.ModelAdmin):
 class ProductAdmin(admin.ModelAdmin):
     model = Product
     list_display = ('name', 'type', 'price',)
-    list_filter = ('type')
+    list_filter = ('type',)
     search_fields = ('name',)
 
     fieldsets = [
