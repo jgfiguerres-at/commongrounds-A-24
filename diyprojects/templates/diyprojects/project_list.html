@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}Recipe List - Recipe Book{% endblock %}
+
+{% block content %}
+<h2>DIY Projects</h2>
+<ul>
+    {% for project in projects %}
+    <li>
+        <a href="/diyprojects/project/{{ project.id }}">{{ project.title }}</a>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}
