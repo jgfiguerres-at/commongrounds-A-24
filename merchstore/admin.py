@@ -6,7 +6,6 @@ from .models import ProductType, Product
 class ProductTypeAdmin(admin.ModelAdmin):
     model = ProductType
     list_display = ('name',)
-    list_filter = ()
     search_fields = ('name',)
 
     fieldsets = [
@@ -22,7 +21,7 @@ class ProductTypeAdmin(admin.ModelAdmin):
 class ProductAdmin(admin.ModelAdmin):
     model = Product
     list_display = ('name', 'type', 'price',)
-    list_filter = ()
+    list_filter = ('type')
     search_fields = ('name',)
 
     fieldsets = [
