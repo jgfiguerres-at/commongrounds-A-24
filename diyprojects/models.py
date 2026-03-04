@@ -36,7 +36,7 @@ class Project(models.Model):
         return self.title
     
     def get_absolute_url(self):
-        return reverse('project_detail', args=[self.id])
+        return reverse('diyprojects:project_detail', args=[self.pk])
     
     class Meta:
         ordering = ['-created_on']

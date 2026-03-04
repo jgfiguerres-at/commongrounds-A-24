@@ -1,7 +1,10 @@
 from django.shortcuts import render
+from .models import Project
 
 def project_list(request):
-    return render(request, 'diyprojects/projects_list.html')
+    projects = Project.objects.all()
+    return render(request, 'diyprojects/project_list.html', {'projects': projects})
 
-def project_detail(request, id):
-    return render(request, 'diyprojects/project_detail.html')
+def project_detail(request, pk):
+    project = Project.objects.get(pk=pk)
+    return render(request, 'diyprojects/project_detail.html', {'project': project})
