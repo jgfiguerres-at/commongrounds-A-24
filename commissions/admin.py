@@ -2,21 +2,37 @@ from django.contrib import admin
 from .models import CommissionType, Commission
 
 
-@admin.register(CommissionType)
 class CommissionTypeAdmin(admin.ModelAdmin):
-
+    model = CommissionType
     list_display = ("name",)
     search_fields = ('name',)
 
+    fieldsets = [
+        ('Details', {
+            'fields': [
+                'name',
+                'description',
+            ]
+        })
+    ]
 
-@admin.register(Commission)
+
 class CommissionAdmin(admin.ModelAdmin):
-
-    list_display = (
-        "title",
-        "people_required",
-        "created_on",
-        "updated_on",
-    )
+    model = Commission
+    list_display = ("title", "people_required", "created_on", "updated_on",)
     search_fields = ('title',)
-    list_filter = ('created_on',) 
+    list_filter = ('created_on',)
+
+    fieldsets = [
+        ('Details', {
+            'fields': [
+                'title',
+                'description',
+                'people_required',
+            ]
+        }),
+    ]
+
+
+admin.site.register(CommissionType, CommissionTypeAdmin)
+admin.site.register(Commission, CommissionAdmin)
