@@ -2,19 +2,19 @@ from django.db import models
 
 
 class Genre(models.Model):
-
     name = models.CharField(max_length=255)
     description = models.TextField()
 
     class Meta:
         ordering = ["name"]
+        verbose_name = "Genre"
+        verbose_name_plural = "Genres"
 
     def __str__(self):
         return self.name
 
 
 class Book(models.Model):
-
     title = models.CharField(max_length=255)
     genre = models.ForeignKey(
         Genre,
@@ -30,6 +30,8 @@ class Book(models.Model):
 
     class Meta:
         ordering = ["-publication_year"]
+        verbose_name = "Book"
+        verbose_name_plural = "Books"
 
     def __str__(self):
         return f"{self.title} by {self.author}"
