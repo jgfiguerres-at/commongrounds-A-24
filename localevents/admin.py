@@ -17,6 +17,7 @@ class EventTypeAdmin(admin.ModelAdmin):
         })
     ]
 
+
 class EventAdmin(admin.ModelAdmin):
     model = Event
     list_display = ('title', 'category', 'location', 'start_time', 'end_time',)
@@ -25,7 +26,7 @@ class EventAdmin(admin.ModelAdmin):
 
     fieldsets = [
         ('Details', {
-            'fields' : [
+            'fields': [
                 'title',
                 'category',
                 'description',
@@ -33,9 +34,9 @@ class EventAdmin(admin.ModelAdmin):
                 'start_time',
                 'end_time',
             ]
-        })        
+        })
     ]
+
 
 admin.site.register(EventType, EventTypeAdmin)
 admin.site.register(Event, EventAdmin)
-

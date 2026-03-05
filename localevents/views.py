@@ -13,4 +13,3 @@ class EventListView(ListView):
 class EventDetailView(DetailView):
     model = Event
     template_name = 'localevents/event_detail.html'
-
