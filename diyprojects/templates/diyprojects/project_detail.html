@@ -1,16 +1,18 @@
 {% extends 'base.html' %}
 
-{% block title %}{{ project.title }} - Common Grounds{% endblock %}
+{% block title %}DIY Projects | {{ project.title }} - Common Grounds{% endblock %}
 
 {% block content %}
-<h2>{{ project.title }}</h2>
-<p>Created on: {{ project.created_on }}</p>
-<p>Updated on: {{ project.updated_on }}</p>
-<h3>Description:</h3>
-<p>{{ project.description }}</p>
-<h3>Materials:</h3>
-<p>{{ project.materials|linebreaks }}</p>
-<h3>Steps:</h3>
-<p>{{ project.steps|linebreaks }}</p>
-<p><a href="{% url 'diyprojects:project_list' %}">Back to Projects List</a></p>
+    <h2>{{ project.title }}</h2>
+    <p>Created on: {{ project.created_on }}</p>
+    <p>Updated on: {{ project.updated_on }}</p>
+    <br>
+    <h3>Description:</h3>
+    <p>{{ project.description }}</p>
+    <h3>Materials:</h3>
+    <p>{{ project.materials|linebreaks }}</p>
+    <h3>Steps:</h3>
+    <p>{{ project.steps|linebreaks }}</p>
+    <br>
+    <p><a href="{% url 'diyprojects:project_list' %}">Back to Projects List</a></p>
 {% endblock %}
