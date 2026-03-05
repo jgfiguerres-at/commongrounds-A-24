@@ -7,6 +7,8 @@ class EventType(models.Model):
 
     class Meta:
         ordering = ['name']
+        verbose_name = 'event type'
+        verbose_name_plural = 'event types'
 
     def __str__(self):
         return self.name
@@ -30,6 +32,8 @@ class Event(models.Model):
 
     class Meta:
         ordering = ['-created_on']
+        verbose_name = 'event'
+        verbose_name_plural = 'events'
 
     def __str__(self):
         return self.title
