@@ -16,6 +16,7 @@ class ProjectCategory(models.Model):
         verbose_name = "project category"
         verbose_name_plural = "project categories"
 
+
 class Project(models.Model):
     title = models.CharField(max_length=255)
     category = models.ForeignKey(
