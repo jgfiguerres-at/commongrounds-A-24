@@ -5,7 +5,7 @@
 {% block content %}
     <h3>Event List</h3>
     <ul>
-        {% for event in event_list %}
+        {% for event in events %}
             <li>
                 <a href="{{ event.get_absolute_url }}">
                     {{ event.title }} - {{ event.location }},
