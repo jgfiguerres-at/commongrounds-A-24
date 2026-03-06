@@ -13,3 +13,4 @@ class ProjectListView(ListView):
 class ProjectDetailView(DetailView):
     model = Project
     template_name = 'diyprojects/project_detail.html' # default value
+    
