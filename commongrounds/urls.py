@@ -16,13 +16,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
-from django.urls import path, include
 
 urlpatterns = [
     path('', include('merchstore.urls'), name='merchstore'),
-    path('', include('localevents.urls', name='events')),
+    path('', include('localevents.urls'), name='localevents'),
+    path('', include('bookclub.urls'), name='bookclub'),
+    path('', include('diyprojects.urls'), name='diyprojects'),
+    path('', include('commissions.urls'), name='commissions'),
     path('admin/', admin.site.urls),
-    path('', include('bookclub.urls', namespace='bookclub')),
-    path('', include('diyprojects.urls')),
-    path('', include("commissions.urls", namespace="commissions")),
 ]
