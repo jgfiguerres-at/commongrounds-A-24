@@ -7,9 +7,9 @@
     <h4>Category: {{ event.category }}</h4>
     <h4>Location: {{ event.location }}</h4>
     <br>
-    <h4>Start Time: {{ event.start_time }}</h4>
-    <h4>End Time: {{ event.end_time }}</h4>
+    <p>Start Time: {{ event.start_time }}</p>
+    <p>End Time: {{ event.end_time }}</p>
     <br>
     <br>
-    <a href="{% url 'localevents:event_list %}">Return to event list</a>
+    <a href="{% url 'localevents:event_list' %}">Return to event list</a>
 {% endblock %}
