@@ -13,7 +13,7 @@ class CommissionType(models.Model):
         ordering = ['name']
         verbose_name = 'commission type'
         verbose_name_plural = 'commission types'
-    
+
 
 class Commission(models.Model):
     title = models.CharField(max_length=255)
