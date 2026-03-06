@@ -8,10 +8,10 @@ class ProjectCategory(models.Model):
 
     def __str__(self):
         return self.name
-    
+
     def get_absolute_url(self):
         return reverse('diyprojects:project_list')
-    
+
     class Meta:
         ordering = ['name']
         verbose_name = "project category"
@@ -23,7 +23,7 @@ class Project(models.Model):
     category = models.ForeignKey(
         ProjectCategory,
         on_delete=models.SET_NULL,
-        related_name = 'project_list',
+        related_name = 'projects',
         null=True,
         blank=True,
     )
@@ -36,9 +36,9 @@ class Project(models.Model):
 
     def __str__(self):
         return self.title
-    
+
     def get_absolute_url(self):
         return reverse('diyprojects:project_detail', args=[self.pk])
-    
+
     class Meta:
         ordering = ['-created_on']

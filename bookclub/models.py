@@ -11,8 +11,8 @@ class Genre(models.Model):
 
     class Meta:
         ordering = ['name']
-        verbose_name = 'Genre'
-        verbose_name_plural = 'Genres'
+        verbose_name = 'genre'
+        verbose_name_plural = 'genres'
 
 
 class Book(models.Model):
@@ -37,5 +37,5 @@ class Book(models.Model):
 
     class Meta:
         ordering = ['-publication_year']
-        verbose_name = 'Book'
-        verbose_name_plural = 'Books'
+        verbose_name = 'book'
+        verbose_name_plural = 'books'
