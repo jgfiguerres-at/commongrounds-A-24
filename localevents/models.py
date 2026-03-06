@@ -8,8 +8,8 @@ class EventType(models.Model):
 
     class Meta:
         ordering = ['name']
-        verbose_name = 'event type'
-        verbose_name_plural = 'event types'
+        verbose_name = 'event category'
+        verbose_name_plural = 'event categories'
 
     def __str__(self):
         return self.name
