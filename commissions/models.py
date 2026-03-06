@@ -5,13 +5,13 @@ class CommissionType(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField()
 
-    class Meta:
-        ordering = ['name']
-        verbose_name = 'Commission Type'
-        verbose_name_plural = 'Commission Types'
-
     def __str__(self):
         return self.name
+    
+    class Meta:
+        ordering = ['name']
+        verbose_name = 'commission type'
+        verbose_name_plural = 'commission types'
     
 
 class Commission(models.Model):
@@ -21,10 +21,10 @@ class Commission(models.Model):
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
 
-    class Meta:
-        ordering = ['created_on']
-        verbose_name = 'Commission'
-        verbose_name_plural = 'Commissions'
-
     def __str__(self):
         return self.title
+    
+    class Meta:
+        ordering = ['created_on']
+        verbose_name = 'commission'
+        verbose_name_plural = 'commissions'
