@@ -31,13 +31,13 @@ class Event(models.Model):
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
 
-    class Meta:
-        ordering = ['-created_on']
-        verbose_name = 'event'
-        verbose_name_plural = 'events'
-
     def __str__(self):
         return self.title
 
     def get_absolute_url(self):
         return reverse('localevents:event_detail', args=[int(self.pk)])
+
+    class Meta:
+        ordering = ['-created_on']
+        verbose_name = 'event'
+        verbose_name_plural = 'events'
