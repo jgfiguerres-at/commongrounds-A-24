@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'diyprojects/base_project.html' %}
 
 {% block title %}DIY Projects | {{ project.title }} - Common Grounds{% endblock %}
 
@@ -14,5 +14,5 @@
     <h3>Steps:</h3>
     <p>{{ project.steps|linebreaks }}</p>
     <br>
-    <p><a href="{% url 'diyprojects:project_list' %}">Back to Projects List</a></p>
+    <p><a href="{% url 'diyprojects:project_list' %}">Back to project list</a></p>
 {% endblock %}
