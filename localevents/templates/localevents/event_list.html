@@ -9,7 +9,8 @@
             <li>
                 <a href="{{ event.get_absolute_url }}">
                     {{ event.title }} - {{ event.location }} 
-                    ({{ event.start_time }} - {{ event.end_time }})
+                    ({{ event.start_time|date:'M d, Y' }}-
+                    {{ event.end_time|date:'M d, Y' }})
                 </a>
             </li>
         {% endfor %}
