@@ -4,9 +4,9 @@ from .views import *
 
 urlpatterns = [
     path('commissions/requests', CommissionListView.as_view(),
-        name="commission_list"),
+         name="commission_list"),
     path('commissions/request/<int:pk>', CommissionDetailView.as_view(),
-        name="commission_detail"),
+         name="commission_detail"),
 ]
 
 app_name = 'commissions'

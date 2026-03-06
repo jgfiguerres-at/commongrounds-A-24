@@ -14,8 +14,8 @@ class ProjectCategory(models.Model):
 
     class Meta:
         ordering = ['name']
-        verbose_name = "project category"
-        verbose_name_plural = "project categories"
+        verbose_name = 'project category'
+        verbose_name_plural = 'project categories'
 
 
 class Project(models.Model):
@@ -23,7 +23,7 @@ class Project(models.Model):
     category = models.ForeignKey(
         ProjectCategory,
         on_delete=models.SET_NULL,
-        related_name = 'projects',
+        related_name='projects',
         null=True,
         blank=True,
     )

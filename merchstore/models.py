@@ -19,7 +19,7 @@ class Product(models.Model):
     name = models.CharField(max_length=255)
     type = models.ForeignKey(
         ProductType,
-        on_delete = models.SET_NULL,
+        on_delete=models.SET_NULL,
         related_name='products',
         null=True,
     )

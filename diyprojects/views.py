@@ -5,12 +5,12 @@ from .models import ProjectCategory, Project
 
 
 class ProjectListView(ListView):
-    context_object_name = 'projects'
     model = Project
-    template_name = 'diyprojects/project_list.html' # default value
+    template_name = 'diyprojects/project_list.html'
+    context_object_name = 'projects'
 
 
 class ProjectDetailView(DetailView):
     model = Project
-    template_name = 'diyprojects/project_detail.html' # default value
-    
+    template_name = 'diyprojects/project_detail.html'
+    context_object_name = 'project'
