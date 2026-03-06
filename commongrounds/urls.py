@@ -16,9 +16,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
+from django.urls import path, include
 
 urlpatterns = [
     path('', include('merchstore.urls'), name='merchstore'),
     path('', include('localevents.urls', name='events')),
     path('admin/', admin.site.urls),
+    path('', include('bookclub.urls', namespace='bookclub')),
 ]

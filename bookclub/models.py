@@ -1,0 +1,41 @@
+from django.db import models
+from django.urls import reverse
+
+
+class Genre(models.Model):
+    name = models.CharField(max_length=255)
+    description = models.TextField()
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        ordering = ['name']
+        verbose_name = 'Genre'
+        verbose_name_plural = 'Genres'
+
+
+class Book(models.Model):
+    title = models.CharField(max_length=255)
+    genre = models.ForeignKey(
+        Genre,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='books'
+    )
+    author = models.CharField(max_length=255)
+    publication_year = models.IntegerField()
+    created_on = models.DateTimeField(auto_now_add=True)
+    updated_on = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f'{self.title} by {self.author}'
+
+    def get_absolute_url(self):
+        return reverse('bookclub:book_detail', args={self.pk})
+
+    class Meta:
+        ordering = ['-publication_year']
+        verbose_name = 'Book'
+        verbose_name_plural = 'Books'
