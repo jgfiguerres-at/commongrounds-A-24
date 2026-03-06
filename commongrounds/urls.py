@@ -23,4 +23,5 @@ urlpatterns = [
     path('', include('localevents.urls', name='events')),
     path('admin/', admin.site.urls),
     path('', include('bookclub.urls', namespace='bookclub')),
+    path('', include('diyprojects.urls')),
 ]
