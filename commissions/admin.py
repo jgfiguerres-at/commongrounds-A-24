@@ -5,7 +5,7 @@ from .models import CommissionType, Commission
 
 class CommissionTypeAdmin(admin.ModelAdmin):
     model = CommissionType
-    list_display = ("name",)
+    list_display = ('name',)
     search_fields = ('name',)
 
     fieldsets = [
@@ -20,7 +20,7 @@ class CommissionTypeAdmin(admin.ModelAdmin):
 
 class CommissionAdmin(admin.ModelAdmin):
     model = Commission
-    list_display = ("title", "people_required", "created_on", "updated_on",)
+    list_display = ('title', 'people_required', 'created_on', 'updated_on',)
     search_fields = ('title',)
     list_filter = ('created_on',)
 
