@@ -1,18 +1,3 @@
-<!DOCTYPE html>
+{% extends 'base.html' %}
 
-<html>
-    <head>
-        <link rel="stylesheet" href="style.css">
-        <title>{% block title %} Common Grounds {% endblock %}</title>
-        {% block styles %} {% endblock %}
-    </head>
-    <body>
-        {% block header %}
-        <h1> DIY Projects </h1>
-        {% endblock %}
-        <div id="content">
-            {% block content %} {% endblock %}
-        </div>
-        {% block scripts %} {% endblock %}
-    </body>
-</html>
+{% block header %}DIY Projects{% endblock %}

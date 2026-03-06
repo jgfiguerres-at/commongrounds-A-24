@@ -4,11 +4,11 @@
 
 {% block content %}
     <h3>{{ event.title }}</h3>
-    <h4>Category: {{ event.category }}</h4>
-    <h4>Location: {{ event.location }}</h4>
+    <h4>{{ event.category }}</h4>
+    <h4>{{ event.location }}</h4>
     <br>
-    <p>Start Time: {{ event.start_time }}</p>
-    <p>End Time: {{ event.end_time }}</p>
+    <p>From {{ event.start_time }} to {{ event.end_time }}</p>
+    <br>
     <br>
     <br>
     <a href="{% url 'localevents:event_list' %}">Return to event list</a>
