@@ -7,9 +7,11 @@
     <h4>{{ book.genre }}</h4>
     <h4>{{ book.publication_year }}</h4>
     <br>
-    <p>{{ book.created_on}}</p>
-    <p>{{ book.updated_on}}</p>
+    <p>{{ book.created_on }}</p>
+    <p>{{ book.updated_on }}</p>
     <br>
     <br>
-    <a href="{% url 'bookclub:book_list' %}">Return to book list</a>
+    <a href="{% url 'bookclub:book_list' %}">
+        Return to book list
+    </a>
 {% endblock %}
