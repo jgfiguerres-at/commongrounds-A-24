@@ -1,6 +1,7 @@
 from django.db import models
 from django.urls import reverse
 
+
 class CommissionType(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField()
@@ -25,7 +26,7 @@ class Commission(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return reverse('commissions:commision_detail', args=[int(self.pk)])
+        return reverse('commissions:commission_detail', args=[int(self.pk)])
 
     class Meta:
         ordering = ['created_on']
