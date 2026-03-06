@@ -11,6 +11,7 @@ class ProjectCategory(models.Model):
     
     def get_absolute_url(self):
         return reverse('diyprojects:project_list')
+    
     class Meta:
         ordering = ['name']
         verbose_name = "project category"
