@@ -4,11 +4,15 @@
 
 {% block content %}
     <h3>{{ commission.title }}</h3>
-    <h4>{{ commission.people_required }}</h4>
+    <p>Created on: {{ commission.created_on }}</p>
+    <p>Updated on: {{ commission.updated_on }}</p>
+    <p>People required: {{ commission.people_required }}</h4>
     <br>
-    <p>{{ commission.created_on}}</p>
-    <p>{{ commission.updated_on}}</p>
+    <br>
+    <p>Description: {{ commission.description }}</p>
     <br>
     <br>
-    <a href="{% url 'commissions:commission_list' %}">Return to commissions</a>
+    <a href="{% url 'commissions:commission_list' %}">
+        Return to commissions
+    </a>
 {% endblock %}
