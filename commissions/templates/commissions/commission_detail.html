@@ -1,0 +1,18 @@
+{% extends 'commissions/base_commissions.html' %}
+
+{% block title %}Commissions | {{ commission.title }}{% endblock %}
+
+{% block content %}
+    <h3>{{ commission.title }}</h3>
+    <p>Created on: {{ commission.created_on }}</p>
+    <p>Updated on: {{ commission.updated_on }}</p>
+    <p>People required: {{ commission.people_required }}</h4>
+    <br>
+    <br>
+    <p>Description: {{ commission.description }}</p>
+    <br>
+    <br>
+    <a href="{% url 'commissions:commission_list' %}">
+        Return to commission list
+    </a>
+{% endblock %}
