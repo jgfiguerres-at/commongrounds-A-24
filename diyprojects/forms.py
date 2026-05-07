@@ -1,5 +1,6 @@
 from django import forms
-from .models import Project, ProjectReview, ProjectRating, Favorite
+
+from .models import *
 
 
 class ProjectRatingForm(forms.ModelForm):
@@ -7,7 +8,13 @@ class ProjectRatingForm(forms.ModelForm):
         model = ProjectRating
         fields = ['score']
         widgets = {
-            'score': forms.NumberInput(attrs={'min': 1, 'max': 10, 'class': 'form-control'}),
+            'score': forms.NumberInput(
+                attrs={
+                    'min': 1,
+                    'max': 10,
+                    'class': 'form-control',
+                }
+            ),
         }
 
 
@@ -16,5 +23,11 @@ class ProjectReviewForm(forms.ModelForm):
         model = ProjectReview
         fields = ['comment', 'image']
         widgets = {
-            'comment': forms.Textarea(attrs={'rows': 3, 'class': 'form-control', 'placeholder': 'Write your review here...'}),
+            'comment': forms.Textarea(
+                attrs={
+                    'rows': 3,
+                    'class': 'form-control',
+                    'placeholder': 'Write your review here...',
+                }
+            ),
         }

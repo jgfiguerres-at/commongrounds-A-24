@@ -8,13 +8,13 @@ class EventType(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField()
 
+    def __str__(self):
+        return self.name
+
     class Meta:
         ordering = ['name']
         verbose_name = 'event category'
         verbose_name_plural = 'event categories'
-
-    def __str__(self):
-        return self.name
 
 
 class Event(models.Model):

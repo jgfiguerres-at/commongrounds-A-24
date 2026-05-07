@@ -33,9 +33,8 @@ class Project(models.Model):
     creator = models.ForeignKey(
         Profile, 
         on_delete=models.SET_NULL, 
-        null=True
+        null=True,
     )
-
     description = models.TextField()
     materials = models.TextField()
     steps = models.TextField()
@@ -55,7 +54,7 @@ class Project(models.Model):
 class Favorite(models.Model):
     BACKLOG = 'B'
     TO_DO = 'TD'
-    DONE = "D"
+    DONE = 'D'
     PROJECT_CHOICES = {
         BACKLOG: 'Backlog',
         TO_DO: 'To-Do',
@@ -65,21 +64,21 @@ class Favorite(models.Model):
     project = models.ForeignKey(
         Project,
         on_delete=models.CASCADE,
-        related_name = "favorites"
+        related_name = 'favorites',
     )
     profile = models.ForeignKey(
         Profile,
         on_delete=models.CASCADE,
-        related_name = 'favorites'
+        related_name = 'favorites',
     )
     date_favorited = models.DateField(auto_now_add=True)
     project_status = models.CharField(
         max_length=10,
-        choices=PROJECT_CHOICES
+        choices=PROJECT_CHOICES,
     )
 
     def __str__(self):
-        return f"{self.profile} - {self.project}"
+        return f'{self.profile} - {self.project}'
 
 
 class ProjectReview(models.Model):
@@ -88,25 +87,29 @@ class ProjectReview(models.Model):
         on_delete=models.CASCADE, 
         related_name='reviews',
         null=True, 
-        blank=True
+        blank=True,
     )
     reviewer = models.ForeignKey(
         Profile,
         on_delete=models.CASCADE,
-        related_name = 'reviews'
+        related_name = 'reviews',
     )
     comment = models.TextField()
-    image = models.ImageField(upload_to = 'images/', null=True, blank=True)
+    image = models.ImageField(
+        upload_to = 'images/',
+        null=True,
+        blank=True,
+    )
 
     def __str__(self):
-        return f"{self.reviewer}: {self.comment}"
+        return f'{self.reviewer}: {self.comment}'
 
 
 class ProjectRating(models.Model):
     profile = models.ForeignKey(
         Profile,
         on_delete=models.CASCADE,
-        related_name = 'project_ratings'
+        related_name = 'project_ratings',
     )
     project = models.ForeignKey(
         Project,
@@ -118,7 +121,7 @@ class ProjectRating(models.Model):
     score = models.IntegerField()
 
     def __str__(self):
-        return f"{self.profile} rating: {self.score}/10"   
+        return f'{self.profile} rating: {self.score}/10'   
 
     class Meta:
         unique_together = ('profile', 'project') 

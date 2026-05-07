@@ -11,6 +11,7 @@
     <br>
     <p>{{ product.description }}</p>
     <br>
+
     {% if not is_owner %}
         <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
@@ -24,10 +25,12 @@
     {% endif %}
     <br>
     <br>
+
     {% if is_owner %}
         <a href="{% url 'merchstore:item_update' product.pk %}">Edit product</a>
         <br>
     {% endif %}
     <br>
+
     <a href="{% url 'merchstore:item_list' %}">Return to product list</a>
 {% endblock %}

@@ -4,6 +4,7 @@
 
 {% block content %}
     <h3>Item List</h3>
+
     {% if user.is_authenticated %}
         <p>Your Products</p>
         <ul>
@@ -24,11 +25,12 @@
                 <br>
             </li>
             {% empty %} 
-                <li>No products found</li>
+                <li>No products found.</li>
         {% endfor %}
         </ul>
         <br>
     {% endif %}
+
     <p>All Products</p>
     <ul>
         {% for product in all_products %}
@@ -48,7 +50,7 @@
                 <br>
             </li>
             {% empty %} 
-                <li>No products found</li>
+                <li>No products found.</li>
         {% endfor %}
     </ul>
     <br>

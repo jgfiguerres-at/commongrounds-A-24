@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import ProjectListView, ProjectDetailView, ProjectCreateView, ProjectUpdateView
+from .views import *
 
 app_name = 'diyprojects'
 

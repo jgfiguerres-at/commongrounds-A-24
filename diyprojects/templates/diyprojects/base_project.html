@@ -5,9 +5,9 @@
 {% block header %}
     <h1> DIY Projects </h1>
     {% if user.is_authenticated %}
-        <strong>Hello, {{ user.profile.display_name }}</strong>
+        <strong>Hello, {{ user.profile.display_name }}</strong> | 
     {% else %}
-        | <a href="/admin/login/">Login</a>
+        <a href="{% url 'login'%}">Login</a>
     {% endif %}
 {% endblock %}
 
