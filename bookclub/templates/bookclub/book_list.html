@@ -7,10 +7,10 @@
 
     {% if user.is_authenticated %}
 
-        {% if contributed %}
+        {% if contributed_books %}
             <h4>Books You Contributed</h4>
             <ul>
-              {% for book in contributed %}
+              {% for book in contributed_books %}
                 <li>
                   <a href="{{ book.get_absolute_url }}">{{ book.title }}</a>
                 </li>
@@ -18,10 +18,10 @@
             </ul>
         {% endif %}
 
-        {% if bookmarked %}
+        {% if bookmarked_books %}
             <h4>Books You Bookmarked</h4>
             <ul>
-              {% for book in bookmarked %}
+              {% for book in bookmarked_books %}
                 <li>
                   <a href="{{ book.get_absolute_url }}">{{ book.title }}</a>
                 </li>
@@ -29,10 +29,10 @@
             </ul>
         {% endif %}
 
-        {% if reviewed %}
+        {% if reviewed_books %}
             <h4>Books You Reviewed</h4>
             <ul>
-              {% for book in reviewed %}
+              {% for book in reviewed_books %}
                 <li>
                   <a href="{{ book.get_absolute_url }}">{{ book.title }}</a>
                 </li>
