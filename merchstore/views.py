@@ -52,38 +52,20 @@ class ProductDetailView(DetailView, CreateView):
     
     def get_success_url(self):
         return reverse_lazy('merchstore:cart')
-
+    
     def form_valid(self, form):
         product = self.get_object()
         amount = form.cleaned_data.get('amount')
 
-        if self.request.user.is_authenticated:
-            profile = self.request.user.profile
-            form.instance.buyer = profile
-            form.instance.product = product
-
-            product.stock -= amount
-            product.save()
-
-        if amount > product.stock:
+        if product.stock < amount:
             return self.form_invalid(form)
 
-        return super().form_valid(form)
-    
-    def form_valid(self, form):
-        profile = self.request.user.profile
-        product = self.get_object()
+        form.instance.buyer = self.request.user.profile
+        form.instance.product = self.get_object()
+        form.instance.amount = amount
 
-        if not self.request.user.groups.filter(name='Market Seller').exists():
-            return redirect('merchstore:item_list')
-
-        if not product.owner == profile:
-            return redirect('merchstore:item_detail', pk=product.pk)
-
-        if self.object.amount == 0:
-            self.object.status = 'Out of Stock'
-
-        self.object.save()
+        product.stock -= amount
+        product.save()
 
         return super().form_valid(form)
 
@@ -103,7 +85,8 @@ class ProductCreateView(CreateView, LoginRequiredMixin):
         return super().get(request, *args, **kwargs)
 
     def form_valid(self, form):
-        form.instance.owner = profile = self.request.user.profile
+        form.instance.owner = self.request.user.profile
+
         return super().form_valid(form)
 
 
@@ -127,14 +110,6 @@ class ProductUpdateView(UpdateView, LoginRequiredMixin):
         return super().get(request, *args, **kwargs)
     
     def form_valid(self, form):
-        product = self.get_object()
-
-        if not self.request.user.groups.filter(name='Market Seller').exists():
-            return redirect('merchstore:item_list')
-
-        if not product.owner.filter(id=self.request.user.profile.id).exists():
-            return redirect('merchstore:item_detail', pk=product.pk)
-
         if self.object.amount == 0:
             self.object.status = "Out of Stock"
 

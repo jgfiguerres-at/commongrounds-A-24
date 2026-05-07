@@ -11,9 +11,7 @@
         {% for product in owned_products %}
             <li>
                 <a href="{{ product.get_absolute_url }}">
-                    <b>
-                        {{ product.name }} | ₱{{ product.price }}
-                    </b>
+                    {{ product.name }} | ₱{{ product.price }}
                 </a>
                 {{ product.type }}
                 <br>
@@ -32,9 +30,7 @@
         {% for product in all_products %}
             <li>
                 <a href="{{ product.get_absolute_url }}">
-                    <b>
-                        {{ product.name }} | ₱{{ product.price }}
-                    </b>
+                    {{ product.name }} | ₱{{ product.price }}
                 </a>
                 {{ product.type }}
                 <br>
