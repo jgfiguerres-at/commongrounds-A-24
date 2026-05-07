@@ -21,8 +21,8 @@ class ProjectListView(ListView):
             profile = Profile.objects.get(user=self.request.user)
             created = Project.objects.filter(creator=profile)
             favorited = Project.objects.filter(favorites__profile=profile)
-            reviewed = Project.objects.filter(reviews__reviewer=profile)
-
+            reviewed = Project.objects.filter(reviews__reviewer=profile).distinct()
+            
             context['created_projects'] = created
             context['favorited_projects'] = favorited
             context['reviewed_projects'] = reviewed
