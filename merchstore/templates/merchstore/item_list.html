@@ -17,9 +17,6 @@
                 </a>
                 <br>
                 {{ product.type }}
-                <br>
-                Sold by: {{ product.owner }}
-                <br>
                 {{ product.get_status_display }}
                 <br>
                 <br>
@@ -28,7 +25,6 @@
                 <li>No products found.</li>
         {% endfor %}
         </ul>
-        <br>
     {% endif %}
 
     <p>All Products</p>

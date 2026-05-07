@@ -135,7 +135,7 @@ class EventCreateView(CreateView, LoginRequiredMixin):
         return super().get(request, *args, **kwargs)
 
     def form_valid(self, form):
-        if not self.request.user.groups.filter(name="Event Organizer").exists():
+        if not self.request.user.groups.filter(name='Event Organizer').exists():
             return redirect('localevents:event_list')
 
         self.object.organizer.add(self.request.user.profile)
@@ -153,7 +153,7 @@ class EventUpdateView(UpdateView, LoginRequiredMixin):
         if not request.user.is_authenticated:
             return redirect('login')
 
-        if not request.user.groups.filter(name="Event Organizer").exists():
+        if not request.user.groups.filter(name='Event Organizer').exists():
             return redirect('localevents:event_list')
 
         event = self.get_object()
@@ -165,16 +165,16 @@ class EventUpdateView(UpdateView, LoginRequiredMixin):
     def form_valid(self, form):
         event = self.get_object()
 
-        if not self.request.user.groups.filter(name="Event Organizer").exists():
+        if not self.request.user.groups.filter(name='Event Organizer').exists():
             return redirect('localevents:event_list')
 
         if not event.organizer.filter(id=self.request.user.profile.id).exists():
             return redirect('localevents:event_detail', pk=event.pk)
 
         if self.object.signups.count() >= self.object.event_capacity:
-            self.object.status = "Full"
+            self.object.status = 'Full'
         else:
-            self.object.status = "Available"
+            self.object.status = 'Available'
 
         self.object.save()
 

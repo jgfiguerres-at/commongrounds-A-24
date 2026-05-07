@@ -20,7 +20,7 @@
             {% endfor %}
         </ul>
 
-        <h4>Signed Events</h4>
+        <p>Signed Events</p>
         <ul>
             {% for event in signed_events %}
                 <li>
@@ -51,5 +51,5 @@
     <br>
     <br>
 
-    <a href="{% url 'localevents:event_create' %}">Create Event</a>
+    <a href="{% url 'localevents:event_create' %}">Create an event</a>
 {% endblock %}

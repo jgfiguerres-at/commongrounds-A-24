@@ -137,12 +137,15 @@ class BookCreateView(LoginRequiredMixin, CreateView):
     form_class = BookForm
     template_name = 'bookclub/book_form.html'
 
-    def form_valid(self, form):
-        if not is_book_contributor(self.request.user):
+    def get(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return redirect('login')
+
+        if not is_book_contributor(request.user):
             return redirect('bookclub:book_list')
 
+    def form_valid(self, form):
         form.instance.contributor = self.request.user.profile
-
         return super().form_valid(form)
 
 

@@ -18,7 +18,7 @@ class ProjectListView(ListView):
         context = super().get_context_data(**kwargs)
 
         if self.request.user.is_authenticated:
-            profile = Profile.objects.get(user=self.request.user)
+            profile = self.request.user.profile
             created = Project.objects.filter(creator=profile)
             favorited = Project.objects.filter(favorites__profile=profile)
             reviewed = Project.objects.filter(reviews__reviewer=profile).distinct()
@@ -50,7 +50,7 @@ class ProjectDetailView(DetailView):
         context['reviews'] = reviews
 
         if self.request.user.is_authenticated:
-            profile = Profile.objects.get(user=self.request.user)
+            profile = self.request.user.profile
             has_rated = project.ratings.filter(profile=profile).exists()
             is_favorited = project.favorites.filter(profile=profile).exists()
             is_owner = project.creator == profile
@@ -67,7 +67,7 @@ class ProjectDetailView(DetailView):
         if not request.user.is_authenticated:
             return redirect('login')
 
-        profile = Profile.objects.get(user=request.user)
+        profile = self.request.user.profile
         project = self.get_object()
 
         action = request.POST.get('action')
@@ -126,7 +126,8 @@ class ProjectCreateView(CreateView, LoginRequiredMixin):
         return super().get(request, *args, **kwargs)
 
     def form_valid(self, form):
-        form.instance.creator = Profile.objects.get(user=self.request.user)
+        form.instance.creator = self.request.user.profile
+
         return super().form_valid(form)
 
 
@@ -139,7 +140,7 @@ class ProjectUpdateView(LoginRequiredMixin, UpdateView):
         if not request.user.is_authenticated:
             return redirect('login')
 
-        profile = Profile.objects.get(user=request.user)
+        profile = self.request.user.profile
         project = self.get_object()
 
         if project.creator != profile:
