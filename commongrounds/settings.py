@@ -64,6 +64,8 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'commongrounds.urls'
 
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -130,6 +132,5 @@ USE_TZ = True
 STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 LOGIN_REDIRECT_URL = "/"
-LOGOUT_REDIRECT_URL = "/"
+LOGOUT_REDIRECT_URL = "/login"

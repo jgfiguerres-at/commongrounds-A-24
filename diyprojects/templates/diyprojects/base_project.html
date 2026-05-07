@@ -1,12 +1,13 @@
 {% extends 'base.html' %}
 
 {% block header %}
-    <h1> DIY Projects </h1>
+    <h2>DIY Projects</h2>
 
     {% if user.is_authenticated %}
-        <a href="{% url 'login'%}">Logout</a>
+        {% include 'registration/logout.html' %}
     {% else %}
-        <a href="{% url 'login'%}">Login</a>
+        <a href="{% url 'login' %}">Login</a>
+        <br>
     {% endif %}
+    <br>
 {% endblock %}
-{% block content %} {% endblock %}
