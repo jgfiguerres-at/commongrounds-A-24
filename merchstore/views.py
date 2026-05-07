@@ -76,7 +76,7 @@ class ProductDetailView(DetailView, CreateView):
         if not self.request.user.groups.filter(name='Market Seller').exists():
             return redirect('merchstore:item_list')
 
-        if not product.owner.filter(id=self.request.user.profile.id).exists():
+        if not product.owner == profile:
             return redirect('merchstore:item_detail', pk=product.pk)
 
         if self.object.amount == 0:
