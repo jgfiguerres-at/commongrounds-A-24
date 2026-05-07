@@ -17,7 +17,7 @@ class ProductListView(ListView):
         context = super().get_context_data(**kwargs)
 
         if self.request.user.is_authenticated:
-            profile = Profile.objects.get(user=self.request.user)
+            profile = self.request.user.profile
             owned = Product.objects.filter(owner=profile)
             other = Product.objects.exclude(owner=profile)
 
@@ -41,7 +41,7 @@ class ProductDetailView(DetailView, CreateView):
 
         is_owner = False
         if self.request.user.is_authenticated:
-            profile = Profile.objects.get(user=self.request.user)
+            profile = self.request.user.profile
             is_owner = (product.owner == profile)
 
         context['is_owner'] = is_owner
@@ -58,7 +58,7 @@ class ProductDetailView(DetailView, CreateView):
         amount = form.cleaned_data.get('amount')
 
         if self.request.user.is_authenticated:
-            profile = Profile.objects.get(user=self.request.user)
+            profile = self.request.user.profile
             form.instance.buyer = profile
             form.instance.product = product
 
@@ -71,6 +71,7 @@ class ProductDetailView(DetailView, CreateView):
         return super().form_valid(form)
     
     def form_valid(self, form):
+        profile = self.request.user.profile
         product = self.get_object()
 
         if not self.request.user.groups.filter(name='Market Seller').exists():
@@ -102,7 +103,7 @@ class ProductCreateView(CreateView, LoginRequiredMixin):
         return super().get(request, *args, **kwargs)
 
     def form_valid(self, form):
-        form.instance.owner = Profile.objects.get(user=self.request.user)
+        form.instance.owner = profile = self.request.user.profile
         return super().form_valid(form)
 
 
@@ -150,7 +151,7 @@ class CartView(ListView, LoginRequiredMixin):
         context = super().get_context_data(**kwargs)
 
         if self.request.user.is_authenticated:
-            profile = Profile.objects.get(user=self.request.user)
+            profile = self.request.user.profile
             purchased = Transaction.objects.filter(buyer=profile)
 
             context['purchased_products'] = purchased
@@ -166,7 +167,7 @@ class TransactionListView(ListView, LoginRequiredMixin):
         context = super().get_context_data(**kwargs)
 
         if self.request.user.is_authenticated:
-            profile = Profile.objects.get(user=self.request.user)
+            profile = self.request.user.profile
             owned = Transaction.objects.filter(product__owner=profile)
 
             context['owned_products'] = owned
