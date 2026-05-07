@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Genre, Book, BookReview, Bookmark, Borrow
+from .models import *
 
 
 class GenreAdmin(admin.ModelAdmin):
@@ -20,8 +20,15 @@ class GenreAdmin(admin.ModelAdmin):
 
 class BookAdmin(admin.ModelAdmin):
     model = Book
-    list_display = ('title', 'author', 'genre', 'publication_year',
-                    'created_on', 'updated_on', 'available_to_borrow')
+    list_display = (
+        'title',
+        'author',
+        'genre',
+        'publication_year',
+        'created_on',
+        'updated_on',
+        'available_to_borrow',
+    )
     list_filter = ('genre', 'publication_year')
     search_fields = ('title', 'author')
 
@@ -66,7 +73,7 @@ class BookmarkAdmin(admin.ModelAdmin):
             'fields': [
                 'profile',
                 'book',
-                'date_bookmarked'
+                'date_bookmarked',
             ]
         })
     ]
@@ -74,8 +81,13 @@ class BookmarkAdmin(admin.ModelAdmin):
 
 class BorrowAdmin(admin.ModelAdmin):
     model = Borrow
-    list_display = ('book', 'borrower', 'name',
-                    'date_borrowed', 'date_to_return')
+    list_display = (
+        'book',
+        'borrower',
+        'name',
+        'date_borrowed',
+        'date_to_return',
+    )
 
     fieldsets = [
         ('Details', {
@@ -84,7 +96,7 @@ class BorrowAdmin(admin.ModelAdmin):
                 'borrower',
                 'name',
                 'date_borrowed',
-                'date_to_return'
+                'date_to_return',
             ]
         })
     ]

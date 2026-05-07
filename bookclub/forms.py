@@ -1,6 +1,7 @@
 from django import forms
 from datetime import timedelta
-from .models import Book, BookReview, Borrow
+
+from .models import *
 
 
 class BookForm(forms.ModelForm):
@@ -37,4 +38,5 @@ class BorrowForm(forms.ModelForm):
         instance.date_to_return = instance.date_borrowed + timedelta(days=14)
         if commit:
             instance.save()
+
         return instance

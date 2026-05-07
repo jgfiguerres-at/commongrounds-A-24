@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+
 from accounts.models import Profile
 
 
@@ -26,7 +27,7 @@ class Book(models.Model):
         related_name='books'
     )
     contributer = models.ForeignKey(
-        'accounts.Profile',
+        Profile,
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
@@ -52,13 +53,19 @@ class Book(models.Model):
 
 class BookReview(models.Model):
     user_reviewer = models.ForeignKey(
-        'accounts.Profile',
+        Profile,
         on_delete=models.CASCADE,
         null=True,
         blank=True,
     )
-    anon_reviewer = models.CharField(max_length=255, blank=True)
-    book = models.ForeignKey(Book, on_delete=models.CASCADE)
+    anon_reviewer = models.CharField(
+        max_length=255,
+        blank=True,
+    )
+    book = models.ForeignKey(
+        Book,
+        on_delete=models.CASCADE,
+    )
     title = models.CharField(max_length=255)
     comment = models.TextField()
 
@@ -68,19 +75,29 @@ class BookReview(models.Model):
     def reviewer_name(self):
         if self.user_reviewer:
             return self.user_reviewer.display_name
+
         return self.anon_reviewer or 'Anonymous'
 
 
 class Bookmark(models.Model):
-    profile = models.ForeignKey('accounts.Profile', on_delete=models.CASCADE)
-    book = models.ForeignKey(Book, on_delete=models.CASCADE)
+    profile = models.ForeignKey(
+        'accounts.Profile',
+        on_delete=models.CASCADE
+    )
+    book = models.ForeignKey(
+        Book,
+        on_delete=models.CASCADE
+    )
     date_bookmarked = models.DateField(auto_now_add=True)
-
-    class Meta:
-        unique_together = ('profile', 'book')
 
     def __str__(self):
         return f'{self.profile} bookmarked {self.book}'
+
+    class Meta:
+        unique_together = (
+            'profile',
+            'book',
+    )
 
 
 class Borrow(models.Model):
@@ -91,7 +108,10 @@ class Borrow(models.Model):
         null=True,
         blank=True,
     )
-    name = models.CharField(max_length=255, blank=True)
+    name = models.CharField(
+        max_length=255,
+        blank=True,
+    )
     date_borrowed = models.DateField()
     date_to_return = models.DateField()
 

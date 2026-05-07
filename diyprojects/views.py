@@ -22,7 +22,7 @@ class ProjectListView(ListView):
             created = Project.objects.filter(creator=profile)
             favorited = Project.objects.filter(favorites__profile=profile)
             reviewed = Project.objects.filter(reviews__reviewer=profile)
-            
+
             context['created_projects'] = created
             context['favorited_projects'] = favorited
             context['reviewed_projects'] = reviewed
@@ -60,46 +60,46 @@ class ProjectDetailView(DetailView):
             context['is_owner'] = is_owner
         else:
             context['has_rated'] = False
-        
+
         return context
 
     def post(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
             return redirect('login')
 
-        self.object = self.get_object()
         profile = Profile.objects.get(user=request.user)
+        project = self.get_object()
 
         action = request.POST.get('action')
         if action == 'favorite':
             already = Favorite.objects.filter(
                 profile=profile,
-                project=self.object,
+                project=project,
             ).exists()
             if not already:
                 Favorite.objects.create(
                     profile=profile,
-                    project=self.object,
+                    project=project,
                     project_status='Backlog',
                 )
         elif action == 'unfavorite':
             Favorite.objects.filter(
                 profile=profile,
-                project=self.object
+                project=project,
             ).delete()
         elif action == 'rate':
             form = ProjectRatingForm(request.POST)
             if form.is_valid():
                 rating = form.save(commit=False)
-                rating.project = self.object
                 rating.profile = profile
+                rating.project = project
                 rating.save()
         elif action == 'review':
             form = ProjectReviewForm(request.POST, request.FILES)
             if form.is_valid():
                 review = form.save(commit=False)
-                review.project = self.object
                 review.reviewer = profile
+                review.project = project
                 review.save()
 
         return redirect('diyprojects:project_detail', pk=self.object.pk)
@@ -139,8 +139,8 @@ class ProjectUpdateView(LoginRequiredMixin, UpdateView):
         if not request.user.is_authenticated:
             return redirect('login')
 
-        project = self.get_object()
         profile = Profile.objects.get(user=request.user)
+        project = self.get_object()
 
         if project.creator != profile:
             return redirect('diyprojects:project_detail', pk=project.pk)
