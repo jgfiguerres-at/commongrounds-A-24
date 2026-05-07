@@ -17,9 +17,9 @@
             {% csrf_token %}
             {{ form.as_p }}
             {% if has_stock and user.is_authenticated %}
-                <button type="submit">Buy product</button>
+                <button type="submit">Buy Product</button>
             {% else %}
-                <button type="submit" disabled>Buy product</button>
+                <button type="submit" disabled>Buy Product</button>
             {% endif %}
         </form>
     {% endif %}
