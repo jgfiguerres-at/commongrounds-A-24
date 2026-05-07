@@ -12,23 +12,28 @@
     <p>{{ product.description }}</p>
     <br>
 
-    {% if not is_owner %}
-        <form method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
-            {{ form.as_p }}
-            {% if has_stock and user.is_authenticated %}
-                <button type="submit">Buy Product</button>
-            {% else %}
-                <button type="submit" disabled>Buy Product</button>
-            {% endif %}
-        </form>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        {% if has_stock and user.is_authenticated and not is_owner %}
+            <button type="submit">Buy Product</button>
+        {% else %}
+            <button type="submit" disabled>Buy Product</button>
+        {% endif %}
+    </form>
+
+    {% if not has_stock %}
+        <p>The product has no more stock.</p>
     {% endif %}
-    <br>
 
     {% if is_owner %}
-        <a href="{% url 'merchstore:item_update' product.pk %}">Edit product</a>
+        <p>You cannot buy your own product.</p>
         <br>
+        <br>
+        <a href="{% url 'merchstore:item_update' product.pk %}">Edit product</a>
     {% endif %}
+    <br>
+    <br>
     <br>
 
     <a href="{% url 'merchstore:item_list' %}">Return to product list</a>

@@ -1,24 +1,33 @@
 {% extends 'merchstore/base_item.html' %}
 
-{% block title %}Merch Store | Transaction List{% endblock %}
+{% block title %}Merch Store | Your Transactions{% endblock %}
 
 {% block content %}
     <h3>Your Transactions</h3>
-    <ul>
-        {% for product in owned_products %}
-            <li>
-                {{ product.product.name }}
-                <br>
-                {{ product.status }}
-                <br>
-                {{ product.amount }}
-                <br>
-                <br>
-            </li>
-            {% empty %}
-                <li>No transactions found.</li>
+    {% for buyer in product_buyers %}
+        <h4>{{ buyer }}</h4>
+        <ul>
+        {% for transaction in owned_products %}
+            {% if buyer == transaction.buyer %}
+                <li>
+                    {{ transaction.product.name }}
+                    <br>
+                    {{ transaction.get_status_display }}
+                    <br>
+                    {{ transaction.amount }}x
+                    <br>
+                    <br>
+                </li>
+            {% endif %}
         {% endfor %}
-    </ul>
+        </ul>
+        {% empty %}
+            <ul>
+                <li>
+                    No products found.
+                </li>
+            </ul>
+    {% endfor %}
     <br>
     <br>
 

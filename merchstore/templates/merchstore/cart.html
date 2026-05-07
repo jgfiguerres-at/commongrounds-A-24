@@ -4,21 +4,28 @@
 
 {% block content %}
     <h3>Your Cart</h3>
-    <ul>
-        {% for product in purchased_products %}
-            <li>
-                {{ product.product.name }}
-                <br>
-                {{ product.get_status_display }}
-                <br>
-                {{ product.amount }}x
-                <br>
-                <br>
-            </li>
-            {% empty %}
-                <li>No products found.</li>
+    {% for owner in product_owners %}
+        <h4>{{ owner }}</h4>
+        <ul>
+        {% for transaction in purchased_products %}
+            {% if owner == transaction.product.owner %}
+                <li>
+                    {{ transaction.product.name }}
+                    <br>
+                    {{ transaction.get_status_display }}
+                    <br>
+                    {{ transaction.amount }}x
+                    <br>
+                    <br>
+                </li>
+            {% endif %}
         {% endfor %}
-    </ul>
+        </ul>
+        {% empty %}
+            <li>
+                No products found.
+            </li>
+    {% endfor %}
     <br>
     <br>
 

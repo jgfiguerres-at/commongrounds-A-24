@@ -60,15 +60,17 @@ class ProductDetailView(DetailView, CreateView):
         if product.stock < amount:
             return self.form_invalid(form)
 
-        form.instance.buyer = self.request.user.profile
+        if product.amount == 0:
+            product.status = 'Out of Stock'
+
+        form.instance.buyer = Profile.objects.get(user=self.request.user)
         form.instance.product = self.get_object()
         form.instance.amount = amount
-
+        
         product.stock -= amount
         product.save()
 
         return super().form_valid(form)
-
 
 class ProductCreateView(CreateView, LoginRequiredMixin):
     model = Product
@@ -85,8 +87,7 @@ class ProductCreateView(CreateView, LoginRequiredMixin):
         return super().get(request, *args, **kwargs)
 
     def form_valid(self, form):
-        form.instance.owner = self.request.user.profile
-
+        form.instance.owner = profile = self.request.user.profile
         return super().form_valid(form)
 
 
@@ -96,21 +97,31 @@ class ProductUpdateView(UpdateView, LoginRequiredMixin):
     template_name = 'merchstore/item_update.html'
 
     def get(self, request, *args, **kwargs):
+        profile = self.request.user.profile
+        product = self.get_object()
+
         if not request.user.is_authenticated:
             return redirect('login')
 
         if not request.user.groups.filter(name='Market Seller').exists():
             return redirect('merchstore:item_list')
 
-        product = self.get_object()
-
-        if not product.owner.filter(id=request.user.profile.id).exists():
+        if not product.owner == profile:
             return redirect('merchstore:item_detail', pk=product.pk)
 
         return super().get(request, *args, **kwargs)
     
     def form_valid(self, form):
-        if self.object.amount == 0:
+        profile = self.request.user.profile
+        product = self.get_object()
+
+        if not self.request.user.groups.filter(name='Market Seller').exists():
+            return redirect('merchstore:item_list')
+
+        if not product.owner == profile:
+            return redirect('merchstore:item_detail', pk=product.pk)
+
+        if self.object.stock == 0:
             self.object.status = "Out of Stock"
 
         self.object.save()
@@ -128,8 +139,13 @@ class CartView(ListView, LoginRequiredMixin):
         if self.request.user.is_authenticated:
             profile = self.request.user.profile
             purchased = Transaction.objects.filter(buyer=profile)
+            owners = []
+            for transaction in purchased:
+                if transaction.product.owner not in owners:
+                    owners.append(transaction.product.owner)
 
             context['purchased_products'] = purchased
+            context['product_owners'] = owners
 
         return context
 
@@ -144,7 +160,12 @@ class TransactionListView(ListView, LoginRequiredMixin):
         if self.request.user.is_authenticated:
             profile = self.request.user.profile
             owned = Transaction.objects.filter(product__owner=profile)
+            buyers = []
+            for transaction in owned:
+                if transaction.buyer not in buyers:
+                    buyers.append(transaction.buyer)
 
             context['owned_products'] = owned
+            context['product_buyers'] = buyers
 
         return context
