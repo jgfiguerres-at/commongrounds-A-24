@@ -35,14 +35,12 @@ class Event(models.Model):
         on_delete=models.SET_NULL,
         related_name='events',
         null=True,
-        blank=True,
     )
     organizer = models.ManyToManyField(
         Profile,
-        blank=True,
     )
     event_image = models.ImageField(
-        upload_to='events/',
+        upload_to='images/',
         null=True,
         blank=True,
     )
@@ -50,10 +48,11 @@ class Event(models.Model):
     location = models.CharField(max_length=255)
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
-    event_capacity = models.PositiveIntegerField()
+    event_capacity = models.PositiveIntegerField(default=100)
     status = models.CharField(
-        max_length=10,
+        max_length=1,
         choices=STATUS_CHOICES,
+        default=AVAILABLE,
     )
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
