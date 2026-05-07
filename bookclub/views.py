@@ -28,6 +28,8 @@ class BookListView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
+        all_books = Book.objects.all()
+
         if self.request.user.is_authenticated and hasattr(
                 self.request.user, 'profile'):
             profile = self.request.user.profile
@@ -40,16 +42,14 @@ class BookListView(ListView):
                 bookreview__user_reviewer=profile
             )
 
-            other = Book.objects.exclude(contributor=profile)
-            other = other.exclude(bookmark__profile=profile)
-            other = other.exclude(bookreview__user_reviewer=profile)
+            all_books = all_books.exclude(contributor=profile)
+            all_books = all_books.exclude(bookmark__profile=profile)
+            all_books = all_books.exclude(bookreview__user_reviewer=profile)
 
             context['contributed_books'] = contributed
             context['bookmarked_books'] = bookmarked
             context['reviewed_books'] = reviewed
-            context['all_books'] = other
-        else:
-            context['all_books'] = Book.objects.all()
+            context['books'] = all_books
 
         return context
 
@@ -64,6 +64,7 @@ class BookDetailView(DetailView):
         book = self.object
         user = self.request.user
 
+        context['available'] = book.available_to_borrow
         context['review_form'] = BookReviewForm()
         context['reviews'] = book.bookreview_set.all()
         context['bookmark_count'] = book.bookmark_set.count()
