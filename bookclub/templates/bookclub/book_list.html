@@ -6,43 +6,47 @@
     <h3>Book List</h3>
 
     {% if user.is_authenticated %}
-
         {% if contributed_books %}
-            <h4>Books You Contributed</h4>
+            <p>Books You Contributed</p>
             <ul>
               {% for book in contributed_books %}
                 <li>
                   <a href="{{ book.get_absolute_url }}">{{ book.title }}</a>
                 </li>
+                {% empty %}
+                  <li>No books found.</li>
               {% endfor %}
             </ul>
         {% endif %}
 
         {% if bookmarked_books %}
-            <h4>Books You Bookmarked</h4>
+            <p>Books You Bookmarked</p>
             <ul>
               {% for book in bookmarked_books %}
                 <li>
                   <a href="{{ book.get_absolute_url }}">{{ book.title }}</a>
                 </li>
+                {% empty %}
+                  <li>No books found.</li>
               {% endfor %}
             </ul>
         {% endif %}
 
         {% if reviewed_books %}
-            <h4>Books You Reviewed</h4>
+            <p>Books You Reviewed</p>
             <ul>
               {% for book in reviewed_books %}
                 <li>
                   <a href="{{ book.get_absolute_url }}">{{ book.title }}</a>
                 </li>
+                {% empty %}
+                  <li>No books found.</li>
               {% endfor %}
             </ul>
         {% endif %}
-    
     {% endif %}
 
-    <h4>All Books</h4>
+    <p>All Books</p>
     <ul>
       {% for book in books %}
         <li>
@@ -56,9 +60,9 @@
     </ul>
     <br>
     <br>
-    
+
     {% if user.is_authenticated %}
-        <a href="{% url 'bookclub:book_add' %}">Add New Book</a>
+        <a href="{% url 'bookclub:book_add' %}">Add a new book</a>
     {% endif %}
 
 {% endblock %}

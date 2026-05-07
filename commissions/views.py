@@ -25,6 +25,25 @@ class CommissionListView(ListView):
     template_name = 'commissions/commission_list.html'
     context_object_name = 'commissions'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        if self.request.user.is_authenticated and hasattr(
+                self.request.user, 'profile'):
+            profile = self.request.user.profile
+
+            created = Commission.objects.filter(maker=profile)
+            applied = JobApplication.objects.filter(applicant=profile)
+            other = Commission.objects.exclude(maker=profile)
+
+            context['created_commissions'] = created
+            context['applied_jobs'] = applied
+            context['all_commissions'] = other
+        else:
+            context['all_commissions'] = Commission.objects.all()
+
+        return context
+
     def get_queryset(self):
         return Commission.objects.annotate(
             status_order=Case(

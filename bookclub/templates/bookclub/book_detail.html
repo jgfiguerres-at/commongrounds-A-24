@@ -35,13 +35,13 @@
     <p>Bookmarks: {{ bookmark_count }}</p>
     <br>
     {% if available %}
-        <a href="{% url 'bookclub:book_borrow' book.pk %}">Borrow Book</a>
+        <a href="{% url 'bookclub:book_borrow' book.pk %}">Borrow book</a>
     {% else %}
         <p>This book is currently unavailable.</p>
     {% endif %}
     <br><br>
     {% if can_edit %}
-        <a href="{% url 'bookclub:edit_book' book.pk %}">Edit Book</a>
+        <a href="{% url 'bookclub:edit_book' book.pk %}">Edit book</a>
         <br><br>
     {% endif %}
     
@@ -65,7 +65,7 @@
     <form method="POST">
         {% csrf_token %}
         {{ review_form.as_p }}
-        <button type="submit" name="review">Submit Review</button>
+        <button type="submit" name="review">Submit review</button>
     </form>
     <br>
     <br>

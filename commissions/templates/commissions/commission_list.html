@@ -3,20 +3,50 @@
 {% block title %}Commissions | Commission List{% endblock %}
 
 {% block content %}
-    <h3>Your Created Commissions</h3>
-    {% for c in created %}
-        <p><a href="{{ c.get_absolute_url }}">{{ c.title }}</a></p>
-    {% endfor %}
+    <h3>Commission List</h3>
 
-    <h3>Your Applications</h3>
-    {% for c in applied %}
-        <p><a href="{{ c.get_absolute_url }}">{{ c.title }}</a></p>
-    {% endfor %}
+    {% if user.is_authenticated %}
+        {% if created_commisions %}
+            <p>Your Created Commissions</p>
+            <ul>
+              {% for commission in created_commissions %}
+                <li>
+                  <a href="{{ commission.get_absolute_url }}">{{ commission.title }}</a>
+                </li>
+                {% empty %}
+                  <li>No applications found.</li>
+              {% endfor %}
+            </ul>
+        {% endif %}
 
-    <h3>All Commissions</h3>
-    {% for c in commissions %}
-        <p><a href="{{ c.get_absolute_url }}">{{ c.title }}</a></p>
-    {% endfor %}
+        {% if applied_jobs %}
+            <p>Your Applications</p>
+            <ul>
+              {% for application in applied_jobs %}
+                <li>
+                  <a href="{{ application.get_absolute_url }}">{{ application.title }}</a>
+                </li>
+                {% empty %}
+                  <li>No applications found.</li>
+              {% endfor %}
+            </ul>
+        {% endif %}
+    {% endif %}
 
-<a href="{% url 'commissions:commission_add' %}">Create Commission</a>
+    <p>All Commissions</p>
+    <ul>
+      {% for commission in all_commissions %}
+        <li>
+          <a href="{{ commission.get_absolute_url }}">
+            {{ commission.title }}
+          </a>
+        </li>
+      {% empty %}
+        <li>No commissions found.</li>
+      {% endfor %}
+    </ul>
+    <br>
+    <br>
+
+    <a href="{% url 'commissions:commission_add' %}">Create a commission</a>
 {% endblock %}
