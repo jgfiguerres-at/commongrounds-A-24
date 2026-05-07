@@ -28,8 +28,6 @@ class BookListView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        all_books = Book.objects.all()
-
         if self.request.user.is_authenticated and hasattr(
                 self.request.user, 'profile'):
             profile = self.request.user.profile
@@ -42,14 +40,16 @@ class BookListView(ListView):
                 bookreview__user_reviewer=profile
             )
 
-            all_books = all_books.exclude(contributor=profile)
-            all_books = all_books.exclude(bookmark__profile=profile)
-            all_books = all_books.exclude(bookreview__user_reviewer=profile)
+            other = Book.objects.exclude(contributor=profile)
+            other = other.exclude(bookmark__profile=profile)
+            other = other.exclude(bookreview__user_reviewer=profile)
 
             context['contributed_books'] = contributed
             context['bookmarked_books'] = bookmarked
             context['reviewed_books'] = reviewed
-            context['books'] = all_books
+            context['all_books'] = other
+        else:
+            context['all_books'] = Book.objects.all()
 
         return context
 
@@ -64,7 +64,6 @@ class BookDetailView(DetailView):
         book = self.object
         user = self.request.user
 
-        context['available'] = book.available_to_borrow
         context['review_form'] = BookReviewForm()
         context['reviews'] = book.bookreview_set.all()
         context['bookmark_count'] = book.bookmark_set.count()
@@ -133,7 +132,7 @@ class BaseBorrowView(View):
         raise NotImplementedError
 
 
-class BookCreateView(LoginRequiredMixin, CreateView):
+class BookCreateView(CreateView, LoginRequiredMixin):
     model = Book
     form_class = BookForm
     template_name = 'bookclub/book_form.html'
@@ -144,13 +143,16 @@ class BookCreateView(LoginRequiredMixin, CreateView):
 
         if not is_book_contributor(request.user):
             return redirect('bookclub:book_list')
+        
+        return super().get(request, *args, **kwargs)
 
     def form_valid(self, form):
         form.instance.contributor = self.request.user.profile
+
         return super().form_valid(form)
 
 
-class BookUpdateView(LoginRequiredMixin, UpdateView):
+class BookUpdateView(UpdateView, LoginRequiredMixin):
     model = Book
     form_class = BookForm
     template_name = 'bookclub/book_form.html'

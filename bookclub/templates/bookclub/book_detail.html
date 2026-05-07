@@ -16,9 +16,9 @@
     <p>
         <strong>Status:</strong>
         {% if available %}
-            Available to borrow
+            Available to borrow.
         {% else %}
-            Not Available
+            Not available.
         {% endif %}
     </p>
     <br>
@@ -67,7 +67,8 @@
         {{ review_form.as_p }}
         <button type="submit" name="review">Submit Review</button>
     </form>
-
+    <br>
+    <br>
     <br>
 
     <a href="{% url 'bookclub:book_list' %}">

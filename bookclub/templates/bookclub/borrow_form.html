@@ -3,17 +3,14 @@
 {% block title %}Borrow Book{% endblock %}
 
 {% block content %}
+    <h3>Borrow {{ book.title }}</h3>
 
-<h3>Borrow {{ book.title }}</h3>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Confirm Borrow</button>
+    </form>
+    <br>
 
-<form method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Confirm Borrow</button>
-</form>
-
-<br>
-
-<a href="{{ book.get_absolute_url }}">Back</a>
-
+    <a href="{{ book.get_absolute_url }}">Back</a>
 {% endblock %}

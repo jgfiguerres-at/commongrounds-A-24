@@ -3,17 +3,16 @@
 {% block title %}Book Form{% endblock %}
 
 {% block content %}
+    <h3>Book Form</h3>
 
-<h3>Book Form</h3>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Save</button>
+    </form>
+    <br>
+    <br>
+    <br>
 
-<form method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Save</button>
-</form>
-
-<br>
-
-<a href="{% url 'bookclub:book_list' %}">Back</a>
-
+    <a href="{% url 'bookclub:book_list' %}">Back</a>
 {% endblock %}

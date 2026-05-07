@@ -54,7 +54,9 @@
         <li>No books found.</li>
       {% endfor %}
     </ul>
-
+    <br>
+    <br>
+    
     {% if user.is_authenticated %}
         <a href="{% url 'bookclub:book_add' %}">Add New Book</a>
     {% endif %}
