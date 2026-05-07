@@ -36,10 +36,12 @@ class Commission(models.Model):
         CommissionType,
         on_delete=models.SET_NULL,
         null=True,
+        blank=True,
     )
     maker = models.ForeignKey(
         Profile,
         on_delete=models.CASCADE,
+        null=True,
     )
     people_required = models.PositiveIntegerField()
     status = models.CharField(
@@ -116,6 +118,8 @@ class JobApplication(models.Model):
     applicant = models.ForeignKey(
         Profile,
         on_delete=models.CASCADE,
+        null=True,
+        blank=True,
     )
     status = models.CharField(
         max_length=255,

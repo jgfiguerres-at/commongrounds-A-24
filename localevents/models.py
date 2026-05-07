@@ -35,6 +35,7 @@ class Event(models.Model):
         on_delete=models.SET_NULL,
         related_name='events',
         null=True,
+        blank=True,
     )
     organizer = models.ManyToManyField(
         Profile,

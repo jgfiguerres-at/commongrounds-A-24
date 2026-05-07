@@ -80,7 +80,7 @@ class ProductDetailView(DetailView, CreateView):
             return redirect('merchstore:item_detail', pk=product.pk)
 
         if self.object.amount == 0:
-            self.object.status = OUT_OF_STOCK
+            self.object.status = 'Out of Stock'
 
         self.object.save()
 

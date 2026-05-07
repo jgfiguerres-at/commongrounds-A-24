@@ -22,9 +22,9 @@ class Book(models.Model):
     genre = models.ForeignKey(
         Genre,
         on_delete=models.SET_NULL,
+        related_name='books',
         null=True,
         blank=True,
-        related_name='books'
     )
     contributor = models.ForeignKey(
         Profile,

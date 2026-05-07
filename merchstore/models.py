@@ -35,6 +35,7 @@ class Product(models.Model):
         on_delete=models.SET_NULL,
         related_name='products',
         null=True,
+        blank=True,
     )
     owner = models.ForeignKey(
         Profile,

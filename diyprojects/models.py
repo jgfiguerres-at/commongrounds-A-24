@@ -110,13 +110,13 @@ class ProjectRating(models.Model):
         Profile,
         on_delete=models.CASCADE,
         related_name = 'project_ratings',
+        null=True,
     )
     project = models.ForeignKey(
         Project,
         on_delete=models.CASCADE,
         related_name='ratings',
         null=True,
-        blank=True,
     )
     score = models.IntegerField()
 
