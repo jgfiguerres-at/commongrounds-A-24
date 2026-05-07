@@ -88,10 +88,13 @@ class BookDetailView(DetailView):
 
     def handle_bookmark(self, request):
         if request.user.is_authenticated and hasattr(request.user, 'profile'):
-            Bookmark.objects.get_or_create(
+            bookmark, created = Bookmark.objects.get_or_create(
                 profile=request.user.profile,
                 book=self.object,
             )
+
+            if not created:
+                bookmark.delete()
 
         return redirect(self.object.get_absolute_url())
 

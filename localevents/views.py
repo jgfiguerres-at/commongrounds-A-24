@@ -45,7 +45,7 @@ class EventDetailView(DetailView):
         is_owner = False
         if self.request.user.is_authenticated:
             profile = self.request.user.profile
-            is_owner = (event.organizer == profile)
+            is_owner = event.organizer.filter(pk=profile.pk).exists()
 
         context['signup_count'] = signup_count
         context['is_full'] = is_full
@@ -142,7 +142,7 @@ class EventCreateView(CreateView, LoginRequiredMixin):
 
         self.object.organizer.add(self.request.user.profile)
         
-        return super().form_valid(form)
+        return redirect(self.object.get_absolute_url())
 
 
 class EventUpdateView(UpdateView, LoginRequiredMixin):

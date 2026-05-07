@@ -11,7 +11,9 @@
     <hr>
 
     {% if is_owner %}
-        <a href="{% url 'localevents:event_edit' event.id %}">Edit Event</a>
+        <a href="{% url 'localevents:event_update' event.id %}">
+            <button type="button">Edit Event</button>
+        </a>
     {% endif %}
 
     {% if user.is_authenticated %}
