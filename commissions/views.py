@@ -23,7 +23,6 @@ def is_commission_maker(user):
 class CommissionListView(ListView):
     model = Commission
     template_name = 'commissions/commission_list.html'
-    context_object_name = 'commissions'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -59,7 +58,6 @@ class CommissionListView(ListView):
 class CommissionDetailView(DetailView):
     model = Commission
     template_name = 'commissions/commission_detail.html'
-    context_object_name = 'commission'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
