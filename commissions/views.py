@@ -130,7 +130,7 @@ class ApplyToJobView(BaseJobActionView):
             CommissionService.apply_to_job(job, request.user.profile)
 
 
-class CommissionCreateView(CreateView, LoginRequiredMixin):
+class CommissionCreateView(LoginRequiredMixin, CreateView):
     model = Commission
     form_class = CommissionForm
     template_name = 'commissions/commission_form.html'
@@ -155,9 +155,8 @@ class CommissionCreateView(CreateView, LoginRequiredMixin):
 
         form.instance.maker = self.request.user.profile
 
-        if formset.is_valid():
-            self.object = form.save()
-            formset.instance = self.object
+        if form.is_valid() and formset.is_valid():
+            self.object.save()
             formset.save()
             return redirect(self.object.get_absolute_url())
 
