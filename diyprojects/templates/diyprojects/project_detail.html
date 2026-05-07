@@ -13,12 +13,13 @@
         <p><a href="{% url 'diyprojects:project_update' project.pk %}">Edit this Project</a></p>
     {% endif %}
     <hr>
+    <b>Description:</b>
     <p>{{ project.description }}</p>
     <br>
-    <h4>Materials:</h4>
+    <b>Materials:</b>
     <p>{{ project.materials|linebreaks }}</p>
     <br>
-    <h4>Steps:</h4>
+    <b>Steps:</b>
     <p>{{ project.steps|linebreaks }}</p>
 
     <hr>
