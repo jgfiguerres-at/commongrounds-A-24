@@ -19,7 +19,7 @@
         <div class="user-stats">
             <h3>My Projects</h3>
             <ul>
-                {% for p in created %}
+                {% for p in created_projects %}
                 <li>
                     <a href="{{ p.get_absolute_url }}">{{ p.title }}</a>
                 </li>
@@ -30,7 +30,7 @@
 
             <h3>My Favorites</h3>
             <ul>
-                {% for p in favorited %}
+                {% for p in favorited_projects %}
                 <li>
                     <a href="{{ p.get_absolute_url }}">{{ p.title }}</a>
                 </li>
@@ -43,7 +43,7 @@
 
             <h3>Projects I've Reviewed</h3>
             <ul>
-                {% for p in reviewed %}
+                {% for p in reviewed_projects %}
                 <li>
                     <a href="{{ p.get_absolute_url }}">{{ p.title }}</a>
                 </li>
