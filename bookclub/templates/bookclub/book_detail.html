@@ -24,7 +24,7 @@
     <br>
     <form method="POST">
         {% csrf_token %}
-        <button type="submit" name="toggle_bookmark">
+        <button type="submit" name="bookmark">
             {% if is_bookmarked %}
                 Remove from Bookmarks
             {% else %}
@@ -52,7 +52,7 @@
             <li>
                 <strong>{{ review.title }}</strong><br>
                 By: {{ review.reviewer_name }}<br>
-                {{ review.content }}
+                {{ review.comment }}
             </li>
         {% empty %}
             <li>No reviews yet.</li>
@@ -65,7 +65,7 @@
     <form method="POST">
         {% csrf_token %}
         {{ review_form.as_p }}
-        <button type="submit" name="submit_review">Submit Review</button>
+        <button type="submit" name="review">Submit Review</button>
     </form>
 
     <br>

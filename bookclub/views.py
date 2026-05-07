@@ -77,13 +77,14 @@ class BookDetailView(DetailView):
         return context
 
     def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
         if 'bookmark' in request.POST:
             return self.handle_bookmark(request)
 
         if 'review' in request.POST:
             return self.handle_review(request)
 
-        return redirect(self.get_object.get_absolute_url())
+        return redirect(self.get_object().get_absolute_url())
 
     def handle_bookmark(self, request):
         if request.user.is_authenticated and hasattr(request.user, 'profile'):
