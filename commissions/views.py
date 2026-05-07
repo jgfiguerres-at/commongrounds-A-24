@@ -84,26 +84,6 @@ class CommissionDetailView(DetailView):
         return context
 
 
-    def get_context_data(self, **kwargs):
-            context = super().get_context_data(**kwargs)
-
-            if self.request.user.is_authenticated and hasattr(self.request.user, 'profile'):
-                profile = self.request.user.profile
-                created = Commission.objects.filter(maker=profile)
-                applied = Commission.objects.filter(
-                    jobs__applications__applicant=profile
-                ).distinct()
-
-                context['created'] = created
-                context['applied'] = applied
-
-                context['commissions'] = context['commissions'].exclude(
-                    id__in=created.union(applied)
-                )
-
-            return context
-
-
 class BaseJobActionView(View):
     def post(self, request, pk):
         job = get_object_or_404(Job, pk=pk)
@@ -175,7 +155,8 @@ class CommissionCreateView(LoginRequiredMixin, CreateView):
         form.instance.maker = self.request.user.profile
 
         if form.is_valid() and formset.is_valid():
-            self.object.save()
+            self.object = form.save()
+            formset.instance = self.object
             formset.save()
             return redirect(self.object.get_absolute_url())
 
