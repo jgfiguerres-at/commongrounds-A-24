@@ -138,6 +138,8 @@ class EventCreateView(CreateView, LoginRequiredMixin):
         if not self.request.user.groups.filter(name='Event Organizer').exists():
             return redirect('localevents:event_list')
 
+        self.object = form.save()
+
         self.object.organizer.add(self.request.user.profile)
         
         return super().form_valid(form)
