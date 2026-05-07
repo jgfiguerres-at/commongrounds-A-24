@@ -4,9 +4,9 @@ from django.shortcuts import redirect, get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Case, When, Value, IntegerField
 
-from .models import Commission, Job
-from .forms import CommissionForm, JobFormSet
-from .services import CommissionService
+from .models import *
+from .forms import *
+from .services import *
 
 
 def is_commission_maker(user):
@@ -14,8 +14,8 @@ def is_commission_maker(user):
         user.is_authenticated and
         hasattr(user, 'profile') and
         (
-        user.groups.filter(name='Commission Maker').exists()
-        or user.is_superuser
+            user.groups.filter(name='Commission Maker').exists()
+            or user.is_superuser
         )
     )
 
@@ -44,10 +44,8 @@ class CommissionDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        commission = self.object
-
+        commission = self.get_object()
         jobs = commission.jobs.all()
-
         total_required = sum(j.manpower_required for j in jobs)
         accepted = sum(
             j.applications.filter(status='Accepted').count()
@@ -72,7 +70,6 @@ class CommissionDetailView(DetailView):
 
             if self.request.user.is_authenticated and hasattr(self.request.user, 'profile'):
                 profile = self.request.user.profile
-
                 created = Commission.objects.filter(maker=profile)
                 applied = Commission.objects.filter(
                     jobs__applications__applicant=profile
@@ -115,6 +112,7 @@ class BaseJobActionView(View):
     def get_redirect_url(self, job):
         return job.commission.get_absolute_url()
 
+
 class ApplyToJobView(BaseJobActionView):
     def check_capacity(self, job):
         accepted = job.applications.filter(status='Accepted').count()
@@ -124,7 +122,7 @@ class ApplyToJobView(BaseJobActionView):
         if not hasattr(user, 'profile'):
             return False
 
-        # prevent duplicate applications
+        # Prevents duplicate applications
         return not job.applications.filter(applicant=user.profile).exists()
 
     def perform_action(self, job, request):
@@ -132,7 +130,7 @@ class ApplyToJobView(BaseJobActionView):
             CommissionService.apply_to_job(job, request.user.profile)
 
 
-class CommissionCreateView(LoginRequiredMixin, CreateView):
+class CommissionCreateView(CreateView, LoginRequiredMixin):
     model = Commission
     form_class = CommissionForm
     template_name = 'commissions/commission_form.html'
@@ -166,7 +164,7 @@ class CommissionCreateView(LoginRequiredMixin, CreateView):
         return self.form_invalid(form)
 
 
-class CommissionUpdateView(LoginRequiredMixin, UpdateView):
+class CommissionUpdateView(UpdateView, LoginRequiredMixin):
     model = Commission
     form_class = CommissionForm
     template_name = 'commissions/commission_form.html'
@@ -174,31 +172,33 @@ class CommissionUpdateView(LoginRequiredMixin, UpdateView):
     def dispatch(self, request, *args, **kwargs):
         if not is_commission_maker(request.user):
             return redirect('/')
-        
-        obj = self.get_object()
 
         if not hasattr(request.user, 'profile'):
             return redirect('/')
-        
-        if obj.maker != request.user.profile:
-            return redirect(obj.get_absolute_url())
-        
+
+        commission = self.get_object()
+        if commission.maker != request.user.profile:
+            return redirect(commission.get_absolute_url())
+
         return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['formset'] = JobFormSet(self.request.POST or None, instance=self.object)
+        commission = self.get_object()
+        context['formset'] = JobFormSet(
+            self.request.POST or None,
+            instance=commission,
+        )
+
         return context
 
     def form_valid(self, form):
         context = self.get_context_data()
         formset = context['formset']
-
         if formset.is_valid():
             self.object = form.save()
-            formset.save()
-
             CommissionService.update_commission_status(self.object)
+            formset.save()
 
             return redirect(self.object.get_absolute_url())
 

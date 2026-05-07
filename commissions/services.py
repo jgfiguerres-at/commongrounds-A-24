@@ -1,4 +1,4 @@
-from .models import Commission, Job, JobApplication
+from .models import *
 
 
 class CommissionService:

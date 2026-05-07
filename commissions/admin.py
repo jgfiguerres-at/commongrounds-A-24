@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import CommissionType, Commission, Job, JobApplication
+from .models import *
 
 
 class CommissionTypeAdmin(admin.ModelAdmin):
@@ -25,12 +25,23 @@ class JobInline(admin.TabularInline):
 
 class CommissionAdmin(admin.ModelAdmin):
     model = Commission
-    list_display = ('title', 'type', 'maker', 'status', 'people_required', 'created_on', 'updated_on',)
+    list_display = (
+        'title',
+        'type',
+        'maker',
+        'status',
+        'people_required',
+        'created_on',
+        'updated_on',
+    )
     search_fields = ('title',)
-    list_filter = ('created_on', 'status', 'type')
+    list_filter = (
+        'created_on',
+        'status',
+        'type',
+    )
 
     inlines = [JobInline]
-
     fieldsets = [
         ('Details', {
             'fields': [
