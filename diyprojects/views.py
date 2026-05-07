@@ -63,7 +63,7 @@ class ProjectDetailView(DetailView):
 
         return context
 
-    def post(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs):        
         if not request.user.is_authenticated:
             return redirect('login')
 
