@@ -63,43 +63,43 @@ class ProjectDetailView(DetailView):
 
         return context
 
-    def post(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs):        
         if not request.user.is_authenticated:
             return redirect('login')
 
         profile = self.request.user.profile
-        project = self.get_object()
+        self.object = self.get_object()
 
         action = request.POST.get('action')
         if action == 'favorite':
             already = Favorite.objects.filter(
                 profile=profile,
-                project=project,
+                project=self.object,
             ).exists()
             if not already:
                 Favorite.objects.create(
                     profile=profile,
-                    project=project,
+                    project=self.object,
                     project_status='Backlog',
                 )
         elif action == 'unfavorite':
             Favorite.objects.filter(
                 profile=profile,
-                project=project,
+                project=self.object,
             ).delete()
         elif action == 'rate':
             form = ProjectRatingForm(request.POST)
             if form.is_valid():
                 rating = form.save(commit=False)
                 rating.profile = profile
-                rating.project = project
+                rating.project = self.object
                 rating.save()
         elif action == 'review':
             form = ProjectReviewForm(request.POST, request.FILES)
             if form.is_valid():
                 review = form.save(commit=False)
                 review.reviewer = profile
-                review.project = project
+                review.project = self.object
                 review.save()
 
         return redirect('diyprojects:project_detail', pk=self.object.pk)
