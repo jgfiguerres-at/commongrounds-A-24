@@ -6,7 +6,7 @@ from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView
 
 from .forms import ProjectRatingForm, ProjectReviewForm
-from .models import Favorite, ProjectCategory, Project
+from .models import Favorite, Profile, Project
 
 
 class ProjectListView(ListView):
@@ -18,7 +18,7 @@ class ProjectListView(ListView):
         context = super().get_context_data(**kwargs)
 
         if self.request.user.is_authenticated:
-            profile = self.request.user.profile
+            profile = Profile.objects.get(user=self.request.user)
             
             created = Project.objects.filter(creator=profile)
             favorited = Project.objects.filter(favorites__profile=profile)
@@ -53,7 +53,7 @@ class ProjectDetailView(DetailView):
         context['reviews'] = reviews
 
         if self.request.user.is_authenticated:
-            profile = self.request.user.profile
+            profile = Profile.objects.get(user=self.request.user)
 
             has_rated = project.ratings.filter(profile=profile).exists()
             is_favorited = project.favorites.filter(profile=profile).exists()
@@ -71,7 +71,7 @@ class ProjectDetailView(DetailView):
             return redirect('/admin/login/')
         
         self.object = self.get_object()
-        profile = request.user.profile
+        profile = Profile.objects.get(user=request.user)
 
         action = request.POST.get('action')
 
@@ -113,13 +113,20 @@ class ProjectDetailView(DetailView):
         return redirect('diyprojects:project_detail', pk=self.object.pk)
 
 
-class ProjectCreateView(LoginRequiredMixin, CreateView):
+class ProjectCreateView(CreateView, LoginRequiredMixin):
     model = Project
     fields = ['title', 'category', 'description', 'materials', 'steps']
     template_name = 'diyprojects/project_form.html'
 
+    def get(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return redirect('login')
+        if not request.user.groups.filter(name='Project Creator').exists():
+            return redirect('diyprojects:project_list')
+        return super().get(request, *args, **kwargs)
+
     def form_valid(self, form):
-        form.instance.creator = self.request.user.profile
+        form.instance.creator = Profile.objects.get(user=self.request.user)
         return super().form_valid(form)
 
 
@@ -127,3 +134,15 @@ class ProjectUpdateView(LoginRequiredMixin, UpdateView):
     model = Project
     fields = ['title', 'category', 'description', 'materials', 'steps']
     template_name = 'diyprojects/project_form.html'
+
+    def get(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return redirect('login')
+        
+        project = self.get_object()
+        profile = Profile.objects.get(user=request.user)
+
+        if project.creator != profile:
+            return redirect('diyprojects:project_detail', pk=project.pk)
+
+        return super().get(request, *args, **kwargs)
