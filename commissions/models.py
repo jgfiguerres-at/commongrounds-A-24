@@ -19,19 +19,34 @@ class CommissionType(models.Model):
 
 
 class Commission(models.Model):
-    STATUS_CHOICES = [
-        ('Open', 'Open'),
-        ('Full', 'Full'),
-        ('Completed', 'Completed'),
-        ('Discontinued', 'Discontinued'),
-    ]
+    OPEN = 'O'
+    FULL = 'F'
+    COMPLETED = 'C'
+    DISCONTINUED = 'D'
+    STATUS_CHOICES = {
+        OPEN: 'Open',
+        FULL: 'Full',
+        COMPLETED: 'Completed',
+        DISCONTINUED: 'Discontinued',
+    }
 
     title = models.CharField(max_length=255)
     description = models.TextField()
-    type = models.ForeignKey(CommissionType, null=True, on_delete=models.SET_NULL)
-    maker = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    type = models.ForeignKey(
+        CommissionType,
+        on_delete=models.SET_NULL,
+        null=True,
+    )
+    maker = models.ForeignKey(
+        Profile,
+        on_delete=models.CASCADE,
+    )
     people_required = models.PositiveIntegerField()
-    status = models.CharField(max_length=255, choices=STATUS_CHOICES, default='Open')
+    status = models.CharField(
+        max_length=255,
+        choices=STATUS_CHOICES,
+        default=OPEN,
+    )
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
 
@@ -48,15 +63,25 @@ class Commission(models.Model):
 
 
 class Job(models.Model):
-    STATUS_CHOICES = [
-        ('Open', 'Open'),
-        ('Full', 'Full'),
-    ]
+    OPEN = 'O'
+    FULL = 'F'
+    STATUS_CHOICES = {
+        OPEN: 'Open',
+        FULL: 'Full',
+    }
 
-    commission = models.ForeignKey(Commission, on_delete=models.CASCADE, related_name='jobs')
+    commission = models.ForeignKey(
+        Commission,
+        on_delete=models.CASCADE,
+        related_name='jobs',
+    )
     role = models.CharField(max_length=255)
     manpower_required = models.PositiveIntegerField()
-    status = models.CharField(max_length=255, choices=STATUS_CHOICES, default='Open')
+    status = models.CharField(
+        max_length=255,
+        choices=STATUS_CHOICES,
+        default=OPEN,
+    )
 
     class Meta:
         ordering = [
@@ -74,15 +99,29 @@ class Job(models.Model):
 
 
 class JobApplication(models.Model):
-    STATUS_CHOICES = [
-        ('Pending', 'Pending'),
-        ('Accepted', 'Accepted'),
-        ('Rejected', 'Rejected'),
-    ]
+    PENDING = 'P'
+    ACCEPTED = 'A'
+    REJECTED = 'R'
+    STATUS_CHOICES = {
+        PENDING: 'Pending',
+        ACCEPTED: 'Accepted',
+        REJECTED: 'Rejected',
+    }
 
-    job = models.ForeignKey(Job, on_delete=models.CASCADE, related_name='applications')
-    applicant = models.ForeignKey(Profile, on_delete=models.CASCADE)
-    status = models.CharField(max_length=255, choices=STATUS_CHOICES, default='Pending')
+    job = models.ForeignKey(
+        Job,
+        on_delete=models.CASCADE,
+        related_name='applications',
+    )
+    applicant = models.ForeignKey(
+        Profile,
+        on_delete=models.CASCADE,
+    )
+    status = models.CharField(
+        max_length=255,
+        choices=STATUS_CHOICES,
+        default='Pending',
+    )
     applied_on = models.DateTimeField(auto_now_add=True)
 
     class Meta:
