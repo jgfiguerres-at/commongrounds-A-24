@@ -5,14 +5,22 @@
 {% endblock %}
 
 {% block content %}
-    <h2>{% if object %}Edit Project{% else %}Create a New Project{% endif %}</h2>
+    <h2>
+        {% if object %}
+            Edit Project
+        {% else %}
+            Create New Project
+        {% endif %}
+    </h2>
 
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit">Save Project</button>
     </form>
-
     <br>
+    <br>
+    <br>
+
     <a href="{% url 'diyprojects:project_list' %}">Return to Project List</a>
 {% endblock %}

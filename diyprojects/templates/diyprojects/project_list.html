@@ -4,6 +4,7 @@
 
 {% block content %}
     <h3>Project List</h3>
+
     <ul>
         {% for project in projects %}
         <li>
@@ -14,6 +15,7 @@
             <li>No projects available yet.</li>
         {% endfor %}
     </ul>
+    
     {% if user.is_authenticated %}
         <hr>
         <div class="user-stats">
@@ -57,6 +59,6 @@
     {% endif %}
     <br>
     <br>
-    <br>
+
     <a href="{% url 'diyprojects:project_add' %}">Create project</a>
 {% endblock %}

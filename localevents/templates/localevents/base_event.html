@@ -1,3 +1,12 @@
 {% extends 'base.html' %}
 
-{% block header %}Local Events{% endblock %}
+{% block header %}
+    <h2>Local Events</h2>
+    
+    {% if user.is_authenticated %}
+        <a href="{% url 'login'%}">Logout</a>
+    {% else %}
+        <a href="{% url 'login'%}">Login</a>
+    {% endif %}
+    <br>
+{% endblock %}

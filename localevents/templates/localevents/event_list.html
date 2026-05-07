@@ -4,10 +4,9 @@
 
 {% block content %}
     <h3>Event List</h3>
-    <a href="{% url 'localevents:event_create' %}">Create Event</a>
 
     {% if user.is_authenticated %}
-        <h4>Created Events</h4>
+        <p>Created Events</p>
         <ul>
             {% for event in created_events %}
                 <li>
@@ -36,7 +35,7 @@
         </ul>
     {% endif %}
 
-    <h4>Created Events</h4>
+    <p>Created Events</p>
     <ul>
         {% for event in all_events %}
             <li>
@@ -49,5 +48,8 @@
             <li>No events found.</li>
         {% endfor %}
     </ul>
+    <br>
+    <br>
 
+    <a href="{% url 'localevents:event_create' %}">Create Event</a>
 {% endblock %}

@@ -3,7 +3,7 @@
 {% block title %}Merch Store | Item List{% endblock %}
 
 {% block content %}
-    <h3>Item List</h3>
+    <h3>Product List</h3>
 
     {% if user.is_authenticated %}
         <p>Your Products</p>
@@ -55,5 +55,6 @@
     </ul>
     <br>
     <br>
+
     <a href="{% url 'merchstore:item_create' %}">List a product</a>
 {% endblock %}
