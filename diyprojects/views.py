@@ -6,11 +6,10 @@ from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView
 
 from .forms import ProjectRatingForm, ProjectReviewForm
-from .models import Favorite, ProjectCategory, Project
+from .models import Favorite, Project
 
 
 class ProjectListView(ListView):
-    context_object_name = 'projects'
     model = Project
     template_name = 'diyprojects/project_list.html' # default value
 
@@ -32,7 +31,6 @@ class ProjectListView(ListView):
 
 
 class ProjectDetailView(DetailView):
-    context_object_name = 'project'
     model = Project
     template_name = 'diyprojects/project_detail.html' # default value
 
