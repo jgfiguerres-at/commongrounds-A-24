@@ -60,7 +60,7 @@ class ProductDetailView(DetailView, CreateView):
         if product.stock < amount:
             return self.form_invalid(form)
 
-        if product.amount == 0:
+        if product.stock == 0:
             product.status = 'Out of Stock'
 
         form.instance.buyer = Profile.objects.get(user=self.request.user)
