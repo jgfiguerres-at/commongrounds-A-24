@@ -23,7 +23,6 @@ class ProductListView(ListView):
 
             context['owned_products'] = owned
             context['all_products'] = other
-
         else:
             context['all_products'] = Product.objects.all()
 

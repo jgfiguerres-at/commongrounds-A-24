@@ -12,7 +12,6 @@ from .models import *
 class EventListView(ListView):
     model = Event
     template_name = 'localevents/event_list.html'
-    context_object_name = 'events'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -27,7 +26,6 @@ class EventListView(ListView):
             context['created_events'] = created
             context['signed_events'] = signed
             context['all_events'] = other
-
         else:
             context['all_events'] = Event.objects.all()
 
@@ -41,14 +39,13 @@ class EventDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         event = self.get_object()
-
         signup_count = event.signups.count()
         is_full = signup_count >= event.event_capacity
 
         is_owner = False
         if self.request.user.is_authenticated:
             profile = self.request.user.profile
-            is_owner = event.organizer.filter(id=profile.id).exists()
+            is_owner = (event.organizer == profile)
 
         context['signup_count'] = signup_count
         context['is_full'] = is_full
@@ -59,7 +56,6 @@ class EventDetailView(DetailView):
 
 
 class BaseSignupView(View):
-
     def post(self, request, pk):
         event = get_object_or_404(Event, pk=pk)
 
@@ -67,7 +63,7 @@ class BaseSignupView(View):
             return redirect(self.get_redirect_url(event))
 
         if request.user.is_authenticated:
-            if not self.check_ownership(event, request.user):
+            if self.check_ownership(event, request.user):
                 return redirect(self.get_redirect_url(event))
 
         self.create_signup(event, request)
@@ -88,7 +84,6 @@ class BaseSignupView(View):
 
 
 class EventSignupView(BaseSignupView):
-
     def get(self, request, pk):
         event = get_object_or_404(Event, pk=pk)
 
@@ -106,7 +101,7 @@ class EventSignupView(BaseSignupView):
 
     def check_ownership(self, event, user):
         profile = user.profile
-        return not event.organizer.filter(id=profile.id).exists()
+        return (event.organizer == profile)
 
     def create_signup(self, event, request):
         if request.user.is_authenticated:
@@ -129,6 +124,15 @@ class EventCreateView(CreateView, LoginRequiredMixin):
     model = Event
     form_class = EventForm
     template_name = 'localevents/event_create.html'
+
+    def get(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return redirect('login')
+
+        if not request.user.groups.filter(name='Event Organizer').exists():
+            return redirect('localevents:event_list')
+
+        return super().get(request, *args, **kwargs)
 
     def form_valid(self, form):
         if not self.request.user.groups.filter(name="Event Organizer").exists():
