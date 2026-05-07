@@ -42,9 +42,14 @@ class Product(models.Model):
         related_name='products',
         null=True,
     )
-    product_image = models.ImageField(blank=True)
+    product_image = models.ImageField(
+        upload_to='images/',
+        null=True,
+        blank=True,
+    )
     description = models.TextField()
     price = models.DecimalField(
+        validators=[MinValueValidator(0.00)],
         max_digits=8,
         decimal_places=2,
     )
