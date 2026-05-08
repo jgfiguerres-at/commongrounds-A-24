@@ -14,10 +14,7 @@ def is_book_contributor(user):
     return ( 
         user.is_authenticated and 
         hasattr(user, "profile") and 
-        (
-            user.groups.filter(name="Commission Maker").exists() 
-            or user.is_superuser 
-        )
+        user.groups.filter(name="Commission Maker").exists() 
     )
 
 
