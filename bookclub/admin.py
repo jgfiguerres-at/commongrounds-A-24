@@ -41,7 +41,7 @@ class BookAdmin(admin.ModelAdmin):
                 'publication_year',
                 'synopsis',
                 'available_to_borrow',
-                'contributer',
+                'contributor',
             ]
         }),
     ]
