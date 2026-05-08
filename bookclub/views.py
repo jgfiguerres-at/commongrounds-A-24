@@ -67,7 +67,7 @@ class BookDetailView(DetailView):
 
         is_owner = False
         if self.request.user.is_authenticated and hasattr(self.request.user, 'profile'):
-            is_owner = book.contributor == self.request.user.profile
+            is_owner = (book.contributor == self.request.user.profile)
 
         context['is_owner'] = is_owner
 
