@@ -53,7 +53,7 @@ class ProjectDetailView(DetailView):
             profile = self.request.user.profile
             has_rated = project.ratings.filter(profile=profile).exists()
             is_favorited = project.favorites.filter(profile=profile).exists()
-            is_owner = project.creator == profile
+            is_owner = (project.creator == profile)
 
             context['has_rated'] = has_rated
             context['is_favorited'] = is_favorited
