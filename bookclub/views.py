@@ -66,10 +66,20 @@ class BookDetailView(DetailView):
         context['bookmark_count'] = book.bookmark_set.count()
 
         is_owner = False
-        if self.request.user.is_authenticated and hasattr(self.request.user, 'profile'):
-            is_owner = book.contributor == self.request.user.profile
+        is_bookmarked = False
+        
+        if user.is_authenticated and hasattr(user, 'profile'):
+            profile = user.profile
+
+            is_owner = (book.contributor == profile)
+
+            is_bookmarked = Bookmark.objects.filter(
+                profile=profile,
+                book=book
+            ).exists()
 
         context['is_owner'] = is_owner
+        context['is_bookmarked'] = is_bookmarked
 
         return context
 
