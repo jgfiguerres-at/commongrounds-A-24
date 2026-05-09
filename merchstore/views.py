@@ -49,10 +49,10 @@ class ProductDetailView(DetailView, CreateView):
         context['product'] = product
 
         return context
-    
+
     def get_success_url(self):
         return reverse_lazy('merchstore:cart')
-    
+
     def form_valid(self, form):
         product = self.get_object()
         amount = form.cleaned_data.get('amount')
@@ -66,11 +66,12 @@ class ProductDetailView(DetailView, CreateView):
         form.instance.buyer = Profile.objects.get(user=self.request.user)
         form.instance.product = self.get_object()
         form.instance.amount = amount
-        
+
         product.stock -= amount
         product.save()
 
         return super().form_valid(form)
+
 
 class ProductCreateView(CreateView, LoginRequiredMixin):
     model = Product
@@ -110,7 +111,7 @@ class ProductUpdateView(UpdateView, LoginRequiredMixin):
             return redirect('merchstore:item_detail', pk=product.pk)
 
         return super().get(request, *args, **kwargs)
-    
+
     def form_valid(self, form):
         profile = self.request.user.profile
         product = self.get_object()

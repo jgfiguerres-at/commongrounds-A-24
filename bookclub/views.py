@@ -11,10 +11,10 @@ from .forms import *
 
 
 def is_book_contributor(user):
-    return ( 
-        user.is_authenticated and 
-        hasattr(user, "profile") and 
-        user.groups.filter(name="Book Contributor").exists() 
+    return (
+        user.is_authenticated and
+        hasattr(user, "profile") and
+        user.groups.filter(name="Book Contributor").exists()
     )
 
 
@@ -67,7 +67,7 @@ class BookDetailView(DetailView):
 
         is_owner = False
         is_bookmarked = False
-        
+
         if user.is_authenticated and hasattr(user, 'profile'):
             profile = user.profile
 
@@ -94,7 +94,8 @@ class BookDetailView(DetailView):
         return redirect(self.get_object().get_absolute_url())
 
     def handle_bookmark(self, request):
-        if request.user.is_authenticated and hasattr(request.user, 'profile'):
+        if request.user.is_authenticated and hasattr(
+                request.user, 'profile'):
             bookmark, created = Bookmark.objects.get_or_create(
                 profile=request.user.profile,
                 book=self.object,
@@ -111,7 +112,8 @@ class BookDetailView(DetailView):
             review = form.save(commit=False)
             review.book = self.get_object()
 
-            if request.user.is_authenticated and hasattr(request.user, 'profile'):
+            if request.user.is_authenticated and hasattr(
+                    request.user, 'profile'):
                 review.user_reviewer = request.user.profile
             else:
                 review.anon_reviewer = 'Anonymous'
@@ -153,7 +155,7 @@ class BookCreateView(CreateView, LoginRequiredMixin):
 
         if not is_book_contributor(request.user):
             return redirect('bookclub:book_list')
-        
+
         return super().get(request, *args, **kwargs)
 
     def form_valid(self, form):
@@ -219,7 +221,8 @@ class BookBorrowView(BaseBorrowView):
             borrow = form.save(commit=False)
             borrow.book = book
 
-            if request.user.is_authenticated and hasattr(request.user, 'profile'):
+            if request.user.is_authenticated and hasattr(
+                    request.user, 'profile'):
                 borrow.borrower = request.user.profile
                 borrow.name = request.user.profile.display_name
 

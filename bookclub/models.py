@@ -97,7 +97,7 @@ class Bookmark(models.Model):
         unique_together = (
             'profile',
             'book',
-    )
+        )
 
 
 class Borrow(models.Model):

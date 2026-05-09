@@ -31,8 +31,8 @@ class Project(models.Model):
         blank=True,
     )
     creator = models.ForeignKey(
-        Profile, 
-        on_delete=models.SET_NULL, 
+        Profile,
+        on_delete=models.SET_NULL,
         null=True,
     )
     description = models.TextField()
@@ -64,12 +64,12 @@ class Favorite(models.Model):
     project = models.ForeignKey(
         Project,
         on_delete=models.CASCADE,
-        related_name = 'favorites',
+        related_name='favorites',
     )
     profile = models.ForeignKey(
         Profile,
         on_delete=models.CASCADE,
-        related_name = 'favorites',
+        related_name='favorites',
     )
     date_favorited = models.DateField(auto_now_add=True)
     project_status = models.CharField(
@@ -83,20 +83,20 @@ class Favorite(models.Model):
 
 class ProjectReview(models.Model):
     project = models.ForeignKey(
-        Project, 
-        on_delete=models.CASCADE, 
+        Project,
+        on_delete=models.CASCADE,
         related_name='reviews',
-        null=True, 
+        null=True,
         blank=True,
     )
     reviewer = models.ForeignKey(
         Profile,
         on_delete=models.CASCADE,
-        related_name = 'reviews',
+        related_name='reviews',
     )
     comment = models.TextField()
     image = models.ImageField(
-        upload_to = 'images/',
+        upload_to='images/',
         null=True,
         blank=True,
     )
@@ -109,7 +109,7 @@ class ProjectRating(models.Model):
     profile = models.ForeignKey(
         Profile,
         on_delete=models.CASCADE,
-        related_name = 'project_ratings',
+        related_name='project_ratings',
         null=True,
     )
     project = models.ForeignKey(
@@ -121,7 +121,7 @@ class ProjectRating(models.Model):
     score = models.IntegerField()
 
     def __str__(self):
-        return f'{self.profile} rating: {self.score}/10'   
+        return f'{self.profile} rating: {self.score}/10'
 
     class Meta:
-        unique_together = ('profile', 'project') 
+        unique_together = ('profile', 'project')

@@ -21,8 +21,10 @@ class ProjectListView(ListView):
             profile = self.request.user.profile
             created = Project.objects.filter(creator=profile)
             favorited = Project.objects.filter(favorites__profile=profile)
-            reviewed = Project.objects.filter(reviews__reviewer=profile).distinct()
-            
+            reviewed = Project.objects.filter(
+                reviews__reviewer=profile
+            ).distinct()
+
             context['created_projects'] = created
             context['favorited_projects'] = favorited
             context['reviewed_projects'] = reviewed
@@ -63,7 +65,7 @@ class ProjectDetailView(DetailView):
 
         return context
 
-    def post(self, request, *args, **kwargs):        
+    def post(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
             return redirect('login')
 
