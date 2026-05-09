@@ -1,6 +1,12 @@
 {% extends 'localevents/base_event.html' %}
 
-{% block title %} Local Events | Event Create{% endblock %}
+{% block title %}
+    {% if object %}
+        Local Events | Editing {{ object.title }}
+    {% else %}
+        Local Events | Create Event
+    {% endif %}
+{% endblock %}
 
 {% block content %}
     {% if object %}
@@ -12,6 +18,7 @@
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
+        <br>
 
         {% if object %}
             <button type="submit">Save Changes</button>

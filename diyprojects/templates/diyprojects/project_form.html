@@ -1,7 +1,11 @@
 {% extends 'diyprojects/base_project.html' %}
 
 {% block title %}
-    DIY Projects | {% if object %}Edit {{ object.title }}{% else %}Add New Project{% endif %}
+    {% if object %}
+        DIY Projects | Editing {{ object.title }}
+    {% else %}
+        DIY Projects | Create Project
+    {% endif %}
 {% endblock %}
 
 {% block content %}
@@ -14,6 +18,7 @@
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
+        <br>
 
         {% if object %}
             <button type="submit">Save Changes</button>

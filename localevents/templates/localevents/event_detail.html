@@ -1,6 +1,6 @@
 {% extends 'localevents/base_event.html' %}
 
-{% block title %}Event Detail | {{ event.title }}{% endblock %}
+{% block title %}Local Events | {{ event.title }}{% endblock %}
 
 {% block content %}
     <h3>{{ event.title }}</h3>
@@ -20,14 +20,14 @@
     <br>
 
     {% if is_owner %}
-        <a href="{% url 'localevents:event_update' event.id %}">
+        <a href="{% url 'localevents:event_update' event.pk %}">
             <button type="button">Edit Event</button>
         </a>
     {% endif %}
 
     {% if user.is_authenticated %}
         <form method="post"
-                action="{% url 'localevents:event_signup' event.id %}"
+                action="{% url 'localevents:event_signup' event.pk %}"
                 style="display:inline;">
             {% csrf_token %}
             <button type="submit"
@@ -36,7 +36,7 @@
             </button>
         </form>
     {% else %}
-        <a href="{% url 'localevents:event_signup' event.id %}">
+        <a href="{% url 'localevents:event_signup' event.pk %}">
             <button type="button">Sign Up</button>
         </a>
     {% endif %}

@@ -11,7 +11,7 @@
     <p>updated {{ project.updated_on|date:'M d, Y' }}</p>
 
     {% if is_owner %}
-        <p><a href="{% url 'diyprojects:project_update' project.pk %}">Edit this project</a></p>
+        <p><a href="{% url 'diyprojects:project_update' project.pk %}">Edit project</a></p>
     {% endif %}
 
     <hr>

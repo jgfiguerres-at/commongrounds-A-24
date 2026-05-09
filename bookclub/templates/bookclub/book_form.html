@@ -1,6 +1,12 @@
 {% extends 'bookclub/base_bookclub.html' %}
 
-{% block title %}Book Form{% endblock %}
+{% block title %}
+    {% if object %}
+        Book Club | Editing {{ object.title }}
+    {% else %}
+        Book Club | Create Book
+    {% endif %}
+{% endblock %}
 
 {% block content %}
     {% if object %}
@@ -12,6 +18,7 @@
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
+        <br>
 
         {% if object %}
             <button type="submit">Save Changes</button>

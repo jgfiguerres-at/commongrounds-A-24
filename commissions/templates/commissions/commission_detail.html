@@ -13,10 +13,7 @@
     <p>Total manpower: {{ total_manpower }}</p>
     <p>Open slots: {{ open_manpower }}</p>
     <p>{{ object.description }}</p>
-
-    {% if is_owner %}
-        <a href="{% url 'commissions:commission_edit' object.pk %}">Edit</a>
-    {% endif %}
+    <br>
 
     <h3>Jobs</h3>
 
@@ -32,9 +29,22 @@
         {% else %}
             <button disabled>Full</button>
         {% endif %}
+        {% empty %}
+            No jobs found.
     {% endfor %}
-
     <br>
+    <br>
+    <br>
+    <br>
+
+    {% if is_owner %}
+        <a href="{% url 'commissions:commission_edit' commission.pk %}">
+            Edit commission
+        </a>
+    {% endif %}
+    <br>
+    <br>
+
     <a href="{% url 'commissions:commission_list' %}">
         Return to commission list
     </a>

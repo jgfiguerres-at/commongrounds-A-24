@@ -34,6 +34,7 @@
     </form>
     <p>Bookmarks: {{ bookmark_count }}</p>
     <br>
+
     {% if available %}
         <a href="{% url 'bookclub:book_borrow' book.pk %}">Borrow book</a>
     {% else %}
@@ -44,9 +45,8 @@
         <a href="{% url 'bookclub:edit_book' book.pk %}">Edit book</a>
         <br><br>
     {% endif %}
-    
-    <h4>Reviews</h4>
 
+    <h4>Reviews</h4>
     <ul>
         {% for review in reviews %}
             <li>
@@ -58,7 +58,6 @@
             <li>No reviews yet.</li>
         {% endfor %}
     </ul>
-
     <br>
 
     <h4>Leave a Review</h4>
@@ -68,6 +67,14 @@
         <button type="submit" name="review">Submit review</button>
     </form>
     <br>
+    <br>
+    <br>
+
+    {% if is_owner %}
+        <a href="{% url 'bookclub:book_edit' book.pk %}">
+            Edit book
+        </a>
+    {% endif %}
     <br>
     <br>
 

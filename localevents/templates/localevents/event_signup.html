@@ -1,6 +1,6 @@
 {% extends 'localevents/base_event.html' %}
 
-{% block title %}Event Signup | {{ event.title }}{% endblock %}
+{% block title %}Local Events | {{ event.title }} Sign Up{% endblock %}
 
 {% block content %}
     <h3>Sign Up for {{ event.title }}</h3>
@@ -20,7 +20,7 @@
     <br>
     <br>
 
-    <a href="{% url 'localevents:event_detail' event.id %}">
+    <a href="{% url 'localevents:event_detail' event.pk %}">
         Return to event details
     </a>
 {% endblock %}
