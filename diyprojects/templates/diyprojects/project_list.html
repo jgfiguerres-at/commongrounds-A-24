@@ -5,21 +5,9 @@
 {% block content %}
     <h3>Project List</h3>
 
-    <ul>
-        {% for project in projects %}
-        <li>
-            <a href="{{ project.get_absolute_url }}">{{ project.title }}</a>
-            ({{ project.category.name|default:"Uncategorized" }})
-        </li>
-        {% empty %}
-            <li>No projects available yet.</li>
-        {% endfor %}
-    </ul>
-    
     {% if user.is_authenticated %}
-        <hr>
         <div class="user-stats">
-            <h3>My Projects</h3>
+            <p>Your Projects</p>
             <ul>
                 {% for p in created_projects %}
                 <li>
@@ -29,8 +17,9 @@
                     <li>No projects found.</li>
                 {% endfor %}
             </ul>
+            <br>
 
-            <h3>My Favorites</h3>
+            <p>Your Favorites</p>
             <ul>
                 {% for p in favorited_projects %}
                 <li>
@@ -42,8 +31,9 @@
                 </li>
                 {% endfor %}
             </ul>
+            <br>
 
-            <h3>Projects I've Reviewed</h3>
+            <p>Projects You Reviewed</p>
             <ul>
                 {% for p in reviewed_projects %}
                 <li>
@@ -55,10 +45,23 @@
                 </li>
                 {% endfor %}
             </ul>
+            <br>
         </div>
     {% endif %}
+
+    <p>Available Projects</p>
+    <ul>
+        {% for project in projects %}
+        <li>
+            <a href="{{ project.get_absolute_url }}">{{ project.title }}</a>
+            ({{ project.category.name|default:"Uncategorized" }})
+        </li>
+        {% empty %}
+            <li>No projects available yet.</li>
+        {% endfor %}
+    </ul>
     <br>
     <br>
 
-    <a href="{% url 'diyprojects:project_add' %}">Create project</a>
+    <a href="{% url 'diyprojects:project_add' %}">Create a project</a>
 {% endblock %}

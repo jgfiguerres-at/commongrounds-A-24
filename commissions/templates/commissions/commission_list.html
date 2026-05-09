@@ -7,7 +7,7 @@
 
     {% if user.is_authenticated %}
         {% if created_commissions %}
-            <p>Your Created Commissions</p>
+            <p>Your Commissions</p>
             <ul>
               {% for commission in created_commissions %}
                 <li>
@@ -19,6 +19,7 @@
                   <li>No applications found.</li>
               {% endfor %}
             </ul>
+            <br>
         {% endif %}
 
         {% if applied_jobs %}
@@ -34,10 +35,11 @@
                   <li>No applications found.</li>
               {% endfor %}
             </ul>
+            <br>
         {% endif %}
     {% endif %}
 
-    <p>All Commissions</p>
+    <p>Available Commissions</p>
     <ul>
       {% for commission in all_commissions %}
         <li>

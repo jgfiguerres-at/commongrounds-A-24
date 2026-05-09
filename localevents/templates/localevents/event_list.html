@@ -6,7 +6,7 @@
     <h3>Event List</h3>
 
     {% if user.is_authenticated %}
-        <p>Created Events</p>
+        <p>Your Events</p>
         <ul>
             {% for event in created_events %}
                 <li>
@@ -16,9 +16,10 @@
                     </a>
                 </li>
             {% empty %}
-                <li>No created events found.</li>
+                <li>No events found.</li>
             {% endfor %}
         </ul>
+        <br>
 
         <p>Signed Events</p>
         <ul>
@@ -30,12 +31,13 @@
                     </a>
                 </li>
             {% empty %}
-                <li>No signed events found.</li>
+                <li>No events found.</li>
             {% endfor %}
         </ul>
+        <br>
     {% endif %}
 
-    <p>Created Events</p>
+    <p>Available Events</p>
     <ul>
         {% for event in all_events %}
             <li>
