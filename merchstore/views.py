@@ -63,7 +63,7 @@ class ProductDetailView(DetailView, CreateView):
         if product.stock == 0:
             product.status = 'Out of Stock'
 
-        form.instance.buyer = Profile.objects.get(user=self.request.user)
+        form.instance.buyer = self.request.user.profile
         form.instance.product = self.get_object()
         form.instance.amount = amount
 
@@ -88,7 +88,7 @@ class ProductCreateView(CreateView, LoginRequiredMixin):
         return super().get(request, *args, **kwargs)
 
     def form_valid(self, form):
-        form.instance.owner = profile = self.request.user.profile
+        form.instance.owner = self.request.user.profile
         return super().form_valid(form)
 
 

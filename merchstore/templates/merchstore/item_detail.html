@@ -4,6 +4,12 @@
 
 {% block content %}
     <h3>{{ product.name }}</h3>
+
+    {% if product.product_image %}
+        <img src="{{ product.product_image.url }}" alt="{{ product.description }}"
+            style="max-width: 500px;">
+    {% endif %}
+
     <p>{{ product.type }}</p>
     <p>₱{{ product.price }}</p>
     <p>Sold by {{ product.owner }}</p>

@@ -4,11 +4,20 @@
 
 {% block content %}
     <h3>{{ event.title }}</h3>
-    <h4>{{ event.category }}</h4>
-    <h4>{{ event.location }}</h4>
+
+    {% if event.event_image %}
+        <img src="{{ event.event_image.url }}" alt="{{ event.description }}"
+            style="max-width: 500px;">
+    {% endif %}
+
+    <p>{{ event.category }}</p>
+    <p>{{ event.location }}</p>
     <p>From {{ event.start_time }} to {{ event.end_time }}</p>
     <p>Capacity: {{ signup_count }}/{{ event.event_capacity }}</p>
-    <hr>
+    <br>
+    <p>{{ event.description }}</p>
+    <br>
+    <br>
 
     {% if is_owner %}
         <a href="{% url 'localevents:event_update' event.id %}">
@@ -36,6 +45,8 @@
     {% if is_owner %}
         <p>You cannot sign up for your own event.</p>
     {% endif %}
+    <br>
+    <br>
 
     <a href="{% url 'localevents:event_list' %}">Return to event list</a>
 {% endblock %}
