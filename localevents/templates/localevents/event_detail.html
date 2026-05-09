@@ -26,9 +26,12 @@
     {% endif %}
 
     {% if user.is_authenticated %}
-        <form method="post" action="{% url 'localevents:event_signup' event.id %}" style="display:inline;">
+        <form method="post"
+                action="{% url 'localevents:event_signup' event.id %}"
+                style="display:inline;">
             {% csrf_token %}
-            <button type="submit" {% if is_full or is_owner %}disabled{% endif %}>
+            <button type="submit"
+                    {% if is_full or is_owner %}disabled{% endif %}>
                 Sign Up
             </button>
         </form>

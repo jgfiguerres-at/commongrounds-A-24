@@ -76,7 +76,7 @@ class ProductDetailView(DetailView, CreateView):
 class ProductCreateView(CreateView, LoginRequiredMixin):
     model = Product
     form_class = ProductForm
-    template_name = 'merchstore/item_add.html'
+    template_name = 'merchstore/item_form.html'
 
     def get(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
@@ -95,7 +95,7 @@ class ProductCreateView(CreateView, LoginRequiredMixin):
 class ProductUpdateView(UpdateView, LoginRequiredMixin):
     model = Product
     form_class = ProductForm
-    template_name = 'merchstore/item_update.html'
+    template_name = 'merchstore/item_form.html'
 
     def get(self, request, *args, **kwargs):
         profile = self.request.user.profile

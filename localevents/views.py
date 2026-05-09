@@ -123,7 +123,7 @@ class EventSignupView(BaseSignupView):
 class EventCreateView(CreateView, LoginRequiredMixin):
     model = Event
     form_class = EventForm
-    template_name = 'localevents/event_create.html'
+    template_name = 'localevents/event_form.html'
 
     def get(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
@@ -150,7 +150,7 @@ class EventCreateView(CreateView, LoginRequiredMixin):
 class EventUpdateView(UpdateView, LoginRequiredMixin):
     model = Event
     form_class = EventForm
-    template_name = 'localevents/event_update.html'
+    template_name = 'localevents/event_form.html'
     context_object_name = 'event'
 
     def get(self, request, *args, **kwargs):

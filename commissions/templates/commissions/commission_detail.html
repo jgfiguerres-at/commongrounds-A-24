@@ -24,7 +24,8 @@
         <p>{{ job.role }} ({{ job.status }})</p>
 
         {% if user.is_authenticated and job.status == "Open" %}
-            <form method="POST" action="{% url 'commissions:job_apply' job.pk %}">
+            <form method="POST"
+                    action="{% url 'commissions:job_apply' job.pk %}">
                 {% csrf_token %}
                 <button type="submit">Apply</button>
             </form>
@@ -35,6 +36,6 @@
 
     <br>
     <a href="{% url 'commissions:commission_list' %}">
-    Return to commission list
+        Return to commission list
     </a>
 {% endblock %}

@@ -5,22 +5,25 @@
 {% endblock %}
 
 {% block content %}
-    <h2>
-        {% if object %}
-            Edit Project
-        {% else %}
-            Create New Project
-        {% endif %}
-    </h2>
+    {% if object %}
+        <h3>Edit Project</h3>
+    {% else %}
+        <h3>Create Project</h3>
+    {% endif %}
 
-    <form method="post">
+    <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Save Project</button>
+
+        {% if object %}
+            <input type="submit" value="Save Changes">
+        {% else %}
+            <input type="submit" value="Add Project">
+        {% endif %}
     </form>
     <br>
     <br>
     <br>
 
-    <a href="{% url 'diyprojects:project_list' %}">Return to Project List</a>
+    <a href="{% url 'diyprojects:project_list' %}">Return to project list</a>
 {% endblock %}

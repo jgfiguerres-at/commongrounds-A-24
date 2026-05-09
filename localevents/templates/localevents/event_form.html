@@ -1,12 +1,12 @@
-{% extends 'bookclub/base_bookclub.html' %}
+{% extends 'localevents/base_event.html' %}
 
-{% block title %}Book Form{% endblock %}
+{% block title %} Local Events | Event Create{% endblock %}
 
 {% block content %}
     {% if object %}
-        <h3>Edit Book</h3>
+        <h3>Edit Event</h3>
     {% else %}
-        <h3>Create Book</h3>
+        <h3>Create Event</h3>
     {% endif %}
 
     <form method="POST" enctype="multipart/form-data">
@@ -16,12 +16,14 @@
         {% if object %}
             <input type="submit" value="Save Changes">
         {% else %}
-            <input type="submit" value="Add Book">
+            <input type="submit" value="Add Event">
         {% endif %}
     </form>
     <br>
     <br>
     <br>
 
-    <a href="{% url 'bookclub:book_list' %}">Return to book list</a>
+    <a href="{% url 'localevents:event_list' %}">
+        Return to event list
+    </a>
 {% endblock %}

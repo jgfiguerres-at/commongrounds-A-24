@@ -3,10 +3,17 @@
 {% block content %}
 
 <form method="POST">
+    {% if object %}
+        <h3>Edit Commission</h3>
+    {% else %}
+        <h3>Create Commission</h3>
+    {% endif %}
+
     {% csrf_token %}
     {{ form.as_p }}
+    <br>
 
-    <h3>Jobs</h3>
+    <h4>Jobs</h4>
     {{ formset.management_form }}
 
     {% for form in formset %}
@@ -14,8 +21,18 @@
             {{ form.as_p }}
         </div>
     {% endfor %}
+    <br>
+    <br>
 
     <button type="submit">Submit</button>
+    <br>
+    <br>
+    <br>
+    <br>
+
+    <a href="{% url 'commissions:commission_list' %}">
+        Return to commission list
+    </a>
 </form>
 
 {% endblock %}

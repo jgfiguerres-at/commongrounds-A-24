@@ -3,10 +3,21 @@
 {% block title %}Merch Store | {{ product.name }}{% endblock %}
 
 {% block content %}
+    {% if object %}
+        <h3>Edit Product</h3>
+    {% else %}
+        <h3>Create Product</h3>
+    {% endif %}
+
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
-        <input type="submit" value="Add product">
+
+        {% if object %}
+            <input type="submit" value="Save Changes">
+        {% else %}
+            <input type="submit" value="Add Product">
+        {% endif %}
     </form>
     <br>
     <br>
