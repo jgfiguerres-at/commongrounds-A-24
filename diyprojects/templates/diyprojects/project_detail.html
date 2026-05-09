@@ -11,6 +11,7 @@
     <p>updated {{ project.updated_on|date:'M d, Y' }}</p>
 
     {% if is_owner %}
+        <br>
         <p><a href="{% url 'diyprojects:project_update' project.pk %}">Edit project</a></p>
     {% endif %}
 
@@ -37,11 +38,12 @@
             {% endif %}
         </div>
     {% empty %}
-        <p>No reviews yet. Be the first to review this project!</p>
+        <p>No reviews yet.</p>
     {% endfor %}
 
     {% if user.is_authenticated %}
-        <hr>
+        <br>
+        <br>
         <form method="post">
             {% csrf_token %}
             {% if is_favorited %}
@@ -50,6 +52,7 @@
                 <button type="submit" name="action" value="favorite">Add to Favorites</button>
             {% endif %}
         </form>
+        <br>
 
         <hr>
         <h4>Submit a Rating</h4>
@@ -57,17 +60,23 @@
             <form method="post">
                 {% csrf_token %}
                 {{ rating_form.as_p }}
+                <br>
                 <button type="submit" name="action" value="rate">Submit Rating</button>
             </form>
         {% else %}
             <p>You have already rated this project.</p>
         {% endif %}
+        <br>
+        <br>
 
         <h4>Submit a Review</h4>
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
             {{ review_form.as_p }}
+            <br>
             <button type="submit" name="action" value="review">Submit Review</button>
+            <br>
+            <br>
         </form>
     {% endif %}
     <br>

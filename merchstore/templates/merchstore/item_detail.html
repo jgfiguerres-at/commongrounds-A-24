@@ -21,6 +21,7 @@
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
+        <br>
         {% if has_stock and user.is_authenticated and not is_owner %}
             <button type="submit">Buy Product</button>
         {% else %}
@@ -36,7 +37,9 @@
         <p>You cannot buy your own product.</p>
         <br>
         <br>
-        <a href="{% url 'merchstore:item_update' product.pk %}">Edit product</a>
+        <a href="{% url 'merchstore:item_update' product.pk %}">
+            Edit product
+        </a>
     {% endif %}
     <br>
     <br>
