@@ -110,6 +110,7 @@ class BaseJobActionView(View):
 class ApplyToJobView(BaseJobActionView):
     def check_capacity(self, job):
         accepted = job.applications.filter(status='Accepted').count()
+
         return accepted < job.manpower_required
 
     def check_permission(self, job, user):
@@ -130,8 +131,12 @@ class CommissionCreateView(LoginRequiredMixin, CreateView):
     template_name = 'commissions/commission_form.html'
 
     def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return redirect('login')
+
         if not is_commission_maker(request.user):
-            return redirect('/')
+            return redirect('commissions:commission_list')
+
         return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):

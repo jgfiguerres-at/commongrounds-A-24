@@ -18,12 +18,12 @@ from django.contrib import admin
 from django.urls import include, path
 
 urlpatterns = [
-    path('', include('merchstore.urls'), name='merchstore'),
-    path('', include('localevents.urls'), name='localevents'),
-    path('', include('bookclub.urls'), name='bookclub'),
-    path('', include('diyprojects.urls'), name='diyprojects'),
-    path('', include('commissions.urls'), name='commissions'),
-    path('', include('accounts.urls'), name='accounts'),
-    path('', include('django.contrib.auth.urls')),
+    path('merchstore/', include('merchstore.urls'), name='merchstore'),
+    path('localevents/', include('localevents.urls'), name='localevents'),
+    path('bookclub/', include('bookclub.urls'), name='bookclub'),
+    path('diyprojects/', include('diyprojects.urls'), name='diyprojects'),
+    path('commissions/', include('commissions.urls'), name='commissions'),
+    path('accounts/', include('accounts.urls'), name='accounts'),
+    path('accounts/', include('django.contrib.auth.urls'), name='accounts'),
     path('admin/', admin.site.urls),
 ]

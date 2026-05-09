@@ -1,7 +1,7 @@
 {% extends 'diyprojects/base_project.html' %}
 
 {% block title %}
-    {% if object %}Edit {{ object.title }}{% else %}Add New Project{% endif %} - Common Grounds
+    DIY Projects | {% if object %}Edit {{ object.title }}{% else %}Add New Project{% endif %}
 {% endblock %}
 
 {% block content %}
